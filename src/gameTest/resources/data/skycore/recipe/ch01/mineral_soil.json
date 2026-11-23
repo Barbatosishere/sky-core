@@ -1,0 +1,31 @@
+{
+  "type": "skycore:stone_processing",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "skycore:stone_fragment"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "skycore:mineral_residue"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "skycore:condensate"
+      },
+      "count": 1
+    }
+  ],
+  "results": [
+    {
+      "id": "skycore:mineral_soil",
+      "count": 1
+    }
+  ],
+  "duration_ticks": 100,
+  "required_milestone": "skycore:ch01/condensate_obtained"
+}

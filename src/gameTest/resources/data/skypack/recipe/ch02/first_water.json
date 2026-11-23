@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:bucket"
+    },
+    {
+      "item": "skycore:condensate"
+    },
+    {
+      "item": "skycore:condensate"
+    },
+    {
+      "item": "skycore:condensate"
+    }
+  ],
+  "result": {
+    "id": "minecraft:water_bucket",
+    "count": 1
+  }
+}

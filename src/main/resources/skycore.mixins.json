@@ -1,0 +1,1 @@
+{"required":true,"minVersion":"0.8","package":"dev.skycore.journey.mixin","compatibilityLevel":"JAVA_21","mixins":["JourneyPortalMixin","ServerLevelWeatherMixin","VillagerRestockMixin"],"injectors":{"defaultRequire":1}}

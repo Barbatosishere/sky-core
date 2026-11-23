@@ -1,0 +1,31 @@
+{
+  "type": "skycore:stone_processing",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "minecraft:quartz"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:redstone"
+      },
+      "count": 1
+    }
+  ],
+  "fuel": {
+    "ingredient": {
+      "item": "skycore:primordial_fuel"
+    },
+    "count": 1
+  },
+  "results": [
+    {
+      "id": "skycore:condensate",
+      "count": 2
+    }
+  ],
+  "duration_ticks": 200,
+  "required_milestone": "skycore:ch01/minerals_refined"
+}

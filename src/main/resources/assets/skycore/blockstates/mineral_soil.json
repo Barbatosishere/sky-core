@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "skycore:block/mineral_soil"
+    }
+  }
+}

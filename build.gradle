@@ -1,0 +1,124 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.142'
+}
+
+group = 'dev.skycore'
+version = mod_version
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+base.archivesName = 'skycore'
+layout.buildDirectory = file(providers.gradleProperty('skycore_build_dir').getOrElse('build'))
+
+repositories { mavenCentral() }
+
+// Keep NeoForm's generated cache local: this workstation's shared cache contains a stale junction.
+tasks.withType(net.neoforged.nfrtgradle.NeoFormRuntimeTask).configureEach {
+    homeDirectory = file(providers.gradleProperty('skycore_nfrt_dir').getOrElse('.gradle/neoformruntime'))
+}
+
+sourceSets {
+    gameTest {
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+    }
+    journeyTest {
+        compileClasspath += sourceSets.main.output + sourceSets.gameTest.output + sourceSets.gameTest.compileClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.gameTest.output + sourceSets.gameTest.runtimeClasspath
+    }
+}
+configurations {
+    gameTestImplementation.extendsFrom implementation
+    gameTestRuntimeOnly.extendsFrom runtimeOnly
+    journeyTestImplementation.extendsFrom gameTestImplementation
+    journeyTestRuntimeOnly.extendsFrom gameTestRuntimeOnly
+}
+
+neoForge {
+    version = '21.1.265'
+    runs {
+        client { client() }
+        server { server(); programArgument '--nogui' }
+        gameTestServer {
+            type = 'gameTestServer'
+            sourceSet = sourceSets.gameTest
+            gameDirectory = file(providers.gradleProperty('skycore_gametest_dir').getOrElse('run/gametest'))
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'skycore'
+            systemProperty 'skycore.entropy.restartPhase', providers.gradleProperty('entropy_restart_phase').getOrElse('')
+        }
+        journeyTestServer {
+            server()
+            sourceSet = sourceSets.journeyTest
+            gameDirectory = file(providers.gradleProperty('skycore_journeytest_dir').getOrElse('run/journeytest'))
+            programArgument '--nogui'
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'skycore'
+            systemProperty 'neoforge.enableGameTest', 'true'
+        }
+    }
+    mods {
+        skycore { sourceSet sourceSets.main; sourceSet sourceSets.gameTest }
+    }
+}
+
+// Vanilla GameTestServer omits custom dimensions. Keep the extra dedicated tests out of release JARs.
+if (gradle.startParameter.taskNames.any { it.toLowerCase(java.util.Locale.ROOT).contains('journeytest') }) {
+    neoForge.mods.skycore.sourceSet(sourceSets.journeyTest)
+}
+
+def packMods = file("${pack_minecraft_dir}/mods")
+dependencies {
+    implementation files(new File(packMods, 'ftb-teams-neoforge-2101.1.12.jar'))
+    runtimeOnly files(new File(packMods, 'ftb-library-neoforge-2101.1.39.jar'))
+    runtimeOnly files(new File(packMods, 'architectury-13.0.12-neoforge.jar'))
+    compileOnly files(new File(packMods, 'architectury-13.0.12-neoforge.jar'))
+    gameTestImplementation files(new File(packMods, 'ftb-library-neoforge-2101.1.39.jar'))
+    gameTestImplementation files(new File(packMods, 'architectury-13.0.12-neoforge.jar'))
+    testImplementation platform('org.junit:junit-bom:5.11.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+tasks.named('test', Test) { useJUnitPlatform() }
+tasks.named('processResources', ProcessResources) {
+    def releaseVersion = project.version.toString()
+    inputs.property('mod_version', releaseVersion)
+    filesMatching('META-INF/neoforge.mods.toml') { expand(mod_version: releaseVersion) }
+}
+tasks.named('jar', Jar) {
+    archiveFileName = "skycore-${project.version}-neoforge-1.21.1.jar"
+}
+
+def journeyResources = layout.buildDirectory.dir('generated/journey-resources')
+tasks.register('generateJourneyResources') {
+    inputs.property('journeyResourceSchema', 2)
+    outputs.dir(journeyResources)
+    doLast {
+        def directory = journeyResources.get().asFile
+        def writeJson = { String relative, Object value ->
+            def destination = new File(directory, relative)
+            destination.parentFile.mkdirs()
+            destination.setText(groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(value)) + '\n', 'UTF-8')
+        }
+        (0..<64).each { slot ->
+            def prefix = String.format(java.util.Locale.ROOT, '%02d', slot)
+            writeJson("data/skycore/dimension/team/${prefix}/sky.json", [type:'minecraft:overworld', generator:[type:'minecraft:flat', settings:[biome:'minecraft:plains', features:false, lakes:false, layers:[], structure_overrides:[]]]])
+            writeJson("data/skycore/dimension/team/${prefix}/nether.json", [type:'minecraft:the_nether', generator:[type:'minecraft:noise', settings:'minecraft:nether', biome_source:[type:'minecraft:multi_noise', preset:'minecraft:nether']]])
+            writeJson("data/skycore/dimension/team/${prefix}/end.json", [type:'minecraft:the_end', generator:[type:'minecraft:noise', settings:'minecraft:end', biome_source:[type:'minecraft:the_end']]])
+        }
+        ['world_restorer':'lodestone_top'].each { name, texture ->
+            writeJson("assets/skycore/blockstates/${name}.json", [variants:['':[model:"skycore:block/${name}"]]])
+            writeJson("assets/skycore/models/block/${name}.json", [parent:'minecraft:block/cube_all', textures:[all:"minecraft:block/${texture}"]])
+            writeJson("assets/skycore/models/item/${name}.json", [parent:"skycore:block/${name}"])
+            writeJson("data/skycore/loot_table/blocks/${name}.json", [type:'minecraft:block',pools:[[rolls:1,entries:[[type:'minecraft:item',name:"skycore:${name}"]],conditions:[[condition:'minecraft:survives_explosion']]]]])
+        }
+        [flight_gem:'feather', cloud_core:'heart_of_the_sea', frost_core:'snowball', storm_core:'fire_charge', moss_culture:'slime_ball', life_medium:'honey_bottle', cognition_core:'echo_shard', cognitive_substrate:'nether_star', villager_embryo:'totem_of_undying', civilization_codex:'book'].each { name, texture ->
+            writeJson("assets/skycore/models/item/${name}.json", [parent:'minecraft:item/generated',textures:[layer0:"minecraft:item/${texture}"]])
+        }
+    }
+}
+tasks.named('processResources') { dependsOn('generateJourneyResources'); from(journeyResources) }
+
+// Opt-in only: use the installed full pack, never the development skycore mod.
+if (providers.gradleProperty('fullpack_smoke').isPresent()) {
+    apply from: 'gradle/fullpack-smoke.gradle'
+}

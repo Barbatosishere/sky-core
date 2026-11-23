@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "skycore:rock_core",
+    "skycore:stone_workbench",
+    "skycore:world_activity_collector",
+    "skycore:world_fuel_synthesizer",
+    "skycore:world_restorer",
+    "skycore:mechanical_anti_entropy_field",
+    "skycore:mechanical_entropy_field",
+    "skycore:anti_entropy_stone"
+  ]
+}

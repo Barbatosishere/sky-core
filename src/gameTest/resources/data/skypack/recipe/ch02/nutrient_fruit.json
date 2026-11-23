@@ -1,0 +1,31 @@
+{
+  "type": "skycore:stone_processing",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "minecraft:oak_log"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "skycore:condensate"
+      },
+      "count": 1
+    }
+  ],
+  "fuel": {
+    "ingredient": {
+      "item": "skycore:primordial_fuel"
+    },
+    "count": 1
+  },
+  "results": [
+    {
+      "id": "minecraft:apple",
+      "count": 4
+    }
+  ],
+  "duration_ticks": 100,
+  "required_milestone": "skycore:ch01/first_tree"
+}

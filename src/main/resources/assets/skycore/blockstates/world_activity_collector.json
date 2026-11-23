@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "skycore:block/world_activity_collector" }
+  }
+}

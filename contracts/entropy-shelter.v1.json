@@ -1,0 +1,394 @@
+{
+  "contract_version": 1,
+  "status": "core_runtime_implemented_pending_independent_review_and_fullpack_qa",
+  "mod_id": "skycore",
+  "target": {
+    "minecraft": "1.21.1",
+    "neoforge": "21.1.265",
+    "java": 21
+  },
+  "ownership": {
+    "core_root": "E:\\mods\\Sky Core",
+    "pack_root": "D:\\MC\\PrismLauncher_minecraft\\1.21.1(1)",
+    "core": [
+      "src",
+      "contracts",
+      "docs",
+      "tools",
+      "build.gradle",
+      "gradle.properties",
+      "dist"
+    ],
+    "pack": [
+      "minecraft/kubejs",
+      "minecraft/config",
+      "minecraft/defaultconfigs",
+      "docs/pack",
+      "tools",
+      "minecraft/mods installation"
+    ],
+    "parallel_rule": "Each path is relative to its own root. Core never writes the pack root; pack never writes core source, contracts, fixtures or tools. Reviews are read-only."
+  },
+  "registry": {
+    "items_only": [
+      "skycore:world_fuel"
+    ],
+    "blocks_with_same_id_items": [
+      "skycore:mechanical_anti_entropy_field",
+      "skycore:mechanical_entropy_field",
+      "skycore:anti_entropy_stone"
+    ],
+    "block_entities": [
+      "skycore:mechanical_anti_entropy_field",
+      "skycore:mechanical_entropy_field"
+    ],
+    "block_tags": [
+      "skycore:entropy_vulnerable_plants"
+    ],
+    "recipe_types_and_serializers_reused": [
+      "skycore:stone_processing"
+    ],
+    "environment": "natural entropy is an environment, not an additional registered item or block"
+  },
+  "fields": {
+    "coordinates": "dimension resource location + floorDiv(blockX,16) + floorDiv(blockZ,16)",
+    "height": "entire dimension build height [minBuildHeight,maxBuildHeight)",
+    "base_radius_chunks": 0,
+    "expanded_radius_chunks": 1,
+    "mechanical_radius_chunks": 0,
+    "shape": "inclusive Chebyshev chunk square centered on the machine chunk",
+    "priority": [
+      "union_of_all_anti_entropy_coverage",
+      "natural_or_enabled_mechanical_entropy",
+      "ordinary_environment"
+    ],
+    "hazardous": "(natural_entropy || mechanical_entropy) && !protected",
+    "mechanical_enabled_by_default": false,
+    "authorized_members": "any current member of the owning FTB Teams UUID; ownership does not migrate on team changes",
+    "fuel_expiry": "only that machine shrinks from expanded to base coverage",
+    "removal": "remove only the exact machine UUID contribution; preserve overlaps and allow recipe-based reconstruction",
+    "unload": "persisted coverage remains; no chunk tickets or forced loads",
+    "fuel_clock": "one server tick per machine while at least one owner-team member is online, including while machine chunk is unloaded; all offline pauses; no wall-clock catch-up",
+    "mechanical_offline": "Persist enabled state; pause owning-team mechanical hazard execution while the owning team has no online members; no catch-up."
+  },
+  "config": {
+    "type": "SERVER",
+    "file": "skycore-server.toml",
+    "section": "entropy",
+    "defaults": {
+      "naturalDimensions": [],
+      "expandedRadiusChunks": 1,
+      "mechanicalRadiusChunks": 0,
+      "fuelTicksPerItem": 1200,
+      "maxStoredFuelTicks": 76800,
+      "explosionIntervalTicks": 1200,
+      "explosionStrength": 4.0,
+      "maxExplosionsPerServerTick": 1,
+      "maxCandidateChecksPerServerTick": 64,
+      "maxEntityChecksPerServerTick": 128,
+      "maxPlantChecksPerServerTick": 256,
+      "playerWarningTicks": 100,
+      "playerDamageIntervalTicks": 20,
+      "playerDamage": 1.0
+    },
+    "explosion_schedule": "one combined opportunity per enabled dimension per 1200 server ticks; global budgets across all dimensions and natural/mechanical sources; fair rotation, skip exhausted attempts, no catch-up burst",
+    "cross_validation": "maxStoredFuelTicks >= fuelTicksPerItem; otherwise runtime stays unavailable with diagnostic, never clamps away accepted fuel",
+    "activation": "empty naturalDimensions disables natural entropy everywhere; machinery registration alone never enables hazards"
+  },
+  "recipes": {
+    "format": "chapter-1.v1 skycore:stone_processing, counted ingredients, ItemStack id/count, 1-2 results, atomic commit",
+    "authority": "pack publishes production recipes; core contains no production recipe JSON",
+    "balance": "examples are initial defaults; pack may adjust ingredients/counts/durations without changing recipe IDs or paired world-fuel outputs",
+    "recovery": "same anti-entropy-machine recipe, no separate free recovery grant; renewable rock-core materials only, no wood/water/FE/living precursor",
+    "recipe_examples": [
+      {
+        "id": "skycore:entropy/world_fuel",
+        "json": {
+          "type": "skycore:stone_processing",
+          "inputs": [
+            {
+              "ingredient": {
+                "item": "skycore:mineral_residue"
+              },
+              "count": 4
+            },
+            {
+              "ingredient": {
+                "item": "skycore:stone_fragment"
+              },
+              "count": 4
+            },
+            {
+              "ingredient": {
+                "item": "minecraft:quartz"
+              },
+              "count": 1
+            },
+            {
+              "ingredient": {
+                "item": "minecraft:redstone"
+              },
+              "count": 1
+            }
+          ],
+          "fuel": {
+            "ingredient": {
+              "item": "skycore:primordial_fuel"
+            },
+            "count": 1
+          },
+          "results": [
+            {
+              "id": "skycore:world_fuel",
+              "count": 1
+            },
+            {
+              "id": "skycore:anti_entropy_stone",
+              "count": 1
+            }
+          ],
+          "duration_ticks": 200,
+          "required_milestone": "skycore:ch01/minerals_refined"
+        }
+      },
+      {
+        "id": "skycore:entropy/mechanical_anti_entropy_field",
+        "json": {
+          "type": "minecraft:crafting_shaped",
+          "pattern": [
+            "SF",
+            "RS"
+          ],
+          "key": {
+            "S": {
+              "item": "skycore:stone_fragment"
+            },
+            "F": {
+              "item": "skycore:primordial_fuel"
+            },
+            "R": {
+              "item": "skycore:mineral_residue"
+            }
+          },
+          "result": {
+            "id": "skycore:mechanical_anti_entropy_field",
+            "count": 1
+          }
+        }
+      },
+      {
+        "id": "skycore:entropy/mechanical_entropy_field",
+        "json": {
+          "type": "skycore:stone_processing",
+          "inputs": [
+            {
+              "ingredient": {
+                "item": "skycore:stone_fragment"
+              },
+              "count": 8
+            },
+            {
+              "ingredient": {
+                "item": "minecraft:quartz"
+              },
+              "count": 2
+            },
+            {
+              "ingredient": {
+                "item": "minecraft:redstone"
+              },
+              "count": 2
+            },
+            {
+              "ingredient": {
+                "item": "skycore:anti_entropy_stone"
+              },
+              "count": 1
+            }
+          ],
+          "fuel": {
+            "ingredient": {
+              "item": "skycore:primordial_fuel"
+            },
+            "count": 1
+          },
+          "results": [
+            {
+              "id": "skycore:mechanical_entropy_field",
+              "count": 1
+            }
+          ],
+          "duration_ticks": 400,
+          "required_milestone": "skycore:ch01/minerals_refined"
+        }
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "id": "skycore:entropy/world_fuel_produced",
+      "trigger": "owned workbench committed skycore:entropy/world_fuel with both world_fuel and anti_entropy_stone positive outputs"
+    },
+    {
+      "id": "skycore:entropy/world_fuel_supplied",
+      "trigger": "owned anti-entropy machine atomically deducted a real world_fuel item and increased its remaining fuel ticks"
+    }
+  ],
+  "pack_bridge": {
+    "legacy_mapping_field": "mapping",
+    "entropy_mapping_field": "entropy_evidence_mapping",
+    "entropy_snapshot_method": "entropySnapshotJson",
+    "entropy_snapshot_schema_version": 1,
+    "recommended_mapping": {
+      "entropy_world_fuel_produced": "skycore:entropy/world_fuel_produced",
+      "entropy_world_fuel_supplied": "skycore:entropy/world_fuel_supplied"
+    },
+    "rule": "Read legacy milestones and new evidence independently; unavailable entropy snapshot retains new tasks without blocking legacy synchronization. Task IDs stay pack-owned."
+  },
+  "read_api": {
+    "class": "dev.skycore.api.SkyCoreApi",
+    "thread": "logical server main thread only; no record creation or chunk loading",
+    "methods": [
+      "static boolean entropyRuntimeReady(ServerPlayer player)",
+      "static String entropySnapshotJson(ServerPlayer player)",
+      "static String fieldSnapshotJson(ServerLevel level, BlockPos pos)",
+      "static boolean hasEntropyEvidence(ServerPlayer player, String evidenceId)"
+    ],
+    "snapshot_schema_version": 1,
+    "null_semantics": "runtime/team unavailable, or field chunk unloaded; retain task state and retry; never treat null as empty progress or safety",
+    "old_snapshot": "snapshotJson and hasMilestone remain unchanged, old schema_version=1",
+    "event": {
+      "class": "dev.skycore.api.event.TeamEntropyEvidenceGrantedEvent",
+      "bus": "NeoForge_game_bus",
+      "getters": [
+        "getTeamId",
+        "getEvidenceId"
+      ],
+      "semantics": "non-cancellable, after committed state, once per new permanent evidence"
+    },
+    "team_snapshot_example": {
+      "schema_version": 1,
+      "team_id": "00000000-0000-0000-0000-000000000001",
+      "initialized": true,
+      "evidence": [
+        "skycore:entropy/world_fuel_supplied"
+      ],
+      "machines": [
+        {
+          "machine_id": "00000000-0000-0000-0000-000000000002",
+          "kind": "anti_entropy",
+          "dimension": "minecraft:overworld",
+          "x": 0,
+          "y": 64,
+          "z": 0,
+          "loaded": true,
+          "enabled": true,
+          "radius_chunks": 1,
+          "remaining_fuel_ticks": 1200
+        }
+      ],
+      "ecology_implemented": false
+    },
+    "field_snapshot_example": {
+      "schema_version": 1,
+      "dimension": "minecraft:overworld",
+      "x": 16,
+      "y": 64,
+      "z": 0,
+      "natural_entropy": true,
+      "mechanical_entropy": false,
+      "protected": true,
+      "hazardous": false,
+      "protecting_machine_ids": [
+        "00000000-0000-0000-0000-000000000002"
+      ]
+    }
+  },
+  "initialization": {
+    "command": "/skycore shelter initialize <player> <dimension> <pos>",
+    "permission_level": 2,
+    "team_source": "single online player's actual current FTB Teams UUID",
+    "delivery": "place one bound anti-entropy machine at a loaded in-bounds replaceable position, with persistent per-team initialization marker",
+    "idempotency": "same team+dimension+position retry succeeds without duplication; different position conflicts; marker survives machine destruction; recovery uses recipe",
+    "before_enable": "allowed while naturalDimensions is empty; never implicitly enables a dimension",
+    "skeleton_result": "NOT_READY, command result 0; no machine, fuel or progress is granted",
+    "status_command": "/skycore shelter status [player]",
+    "runtime_result": "Successful initialization and same-location committed retries return 1; unavailable/invalid/conflicting attempts return 0. Destroyed committed machines are not regranted."
+  },
+  "persistence": {
+    "storage": "overworld data/skycore_entropy.dat",
+    "schema_version": 1,
+    "canonical": "world SavedData owns teams, machine records, fuel and evidence; block entities keep ownership+stable machine UUID link; spatial index is derived",
+    "root_fields": [
+      "SchemaVersion",
+      "Teams",
+      "Machines"
+    ],
+    "team_fields": [
+      "Id",
+      "Initialization",
+      "Evidence"
+    ],
+    "initialization_fields": [
+      "MachineId",
+      "Dimension",
+      "Pos",
+      "State"
+    ],
+    "machine_fields": [
+      "Id",
+      "OwnerTeam",
+      "Kind",
+      "Dimension",
+      "Pos",
+      "Enabled",
+      "RemainingFuelTicks"
+    ],
+    "block_entity_fields": [
+      "OwnerTeam",
+      "EntropySchemaVersion",
+      "MachineId"
+    ],
+    "nbt_types": {
+      "SchemaVersion": "int",
+      "Teams": "list<compound>",
+      "Machines": "list<compound>",
+      "Id": "UUID int[4]",
+      "OwnerTeam": "UUID int[4]",
+      "MachineId": "UUID int[4]",
+      "Initialization": "optional compound",
+      "Evidence": "list<string>",
+      "Kind": "anti_entropy|entropy string",
+      "Dimension": "resource location string",
+      "Pos": "BlockPos.asLong long",
+      "State": "pending|committed string",
+      "Enabled": "boolean",
+      "RemainingFuelTicks": "nonnegative long",
+      "EntropySchemaVersion": "int"
+    },
+    "old_progress": "skycore_teams.dat remains schema 1; no old milestones deleted, rewritten or inferred as entropy evidence",
+    "missing_new_data": "not initialized, no machines/evidence; do not auto-grant or auto-enable",
+    "missing_schema": "empty data means new; reject nonempty unversioned data because this is the first format, do not guess a migration",
+    "unknown_newer_version": "fail loading with diagnostic, never overwrite/reset; restore full QA/production backup for rollback",
+    "reconciliation": "rebuild index from canonical saved records without loading chunks; reconcile loaded block links before hazards; remove missing/replaced exact machine only; pending initialization reconciles same UUID instead of granting twice"
+  },
+  "compatibility": {
+    "legacy_world_fuel_task": "retain existing world_fuel -> skycore:ch01/minerals_refined task and old progress as legacy proxy; add separate true production/supply tasks, never reuse proxy as evidence",
+    "primordial_fuel": "unchanged processing heat source; not world_fuel",
+    "ecology": "10/30/60 owner-team online minutes remain the reserved decay rules; the ecology decay executor and climate facilities are still unimplemented, and snapshots report ecology_implemented=false.",
+    "deferred": [
+      "independent team worlds",
+      "64 world slots",
+      "initial platform generation",
+      "portals",
+      "climate facilities",
+      "cross-team trade"
+    ]
+  },
+  "player_explosion_policy": {
+    "user_choice": "B",
+    "warning": "During playerWarningTicks, entropy explosions do not directly damage exposed players.",
+    "after_warning": "Entropy explosion damage and configured periodic exposure damage both apply.",
+    "ordinary_explosions": "No extra player grace; shelter coverage still filters affected blocks and entities."
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SS",
+    "SS"
+  ],
+  "key": {
+    "S": {
+      "item": "skycore:stone_fragment"
+    }
+  },
+  "result": {
+    "id": "skycore:stone_workbench",
+    "count": 1
+  }
+}

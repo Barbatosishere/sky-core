@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "skycore:mineral_residue"
+    },
+    {
+      "item": "skycore:mineral_residue"
+    },
+    {
+      "item": "skycore:mineral_residue"
+    },
+    {
+      "item": "skycore:mineral_residue"
+    }
+  ],
+  "result": {
+    "id": "skycore:primordial_fuel",
+    "count": 1
+  }
+}

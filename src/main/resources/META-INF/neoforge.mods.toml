@@ -1,0 +1,33 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="All Rights Reserved"
+
+[[mixins]]
+config="skycore.mixins.json"
+
+[[mods]]
+modId="skycore"
+version="${mod_version}"
+displayName="Sky Core"
+description='''Team-owned, resource-independent first-chapter machinery and progression.'''
+
+[[dependencies.skycore]]
+modId="neoforge"
+type="required"
+versionRange="[21.1.265,21.2)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.skycore]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1]"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.skycore]]
+modId="ftbteams"
+type="required"
+versionRange="[2101.1.12,2102)"
+ordering="AFTER"
+side="BOTH"

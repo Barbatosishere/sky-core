@@ -1,0 +1,196 @@
+{
+  "contract_version": 1,
+  "status": "implemented_v1",
+  "mod_id": "skycore",
+  "project_path": "E:\\mods\\Sky Core",
+  "target": {
+    "minecraft": "1.21.1",
+    "neoforge": "21.1.265",
+    "java": 21,
+    "verified_ftb_teams": "2101.1.12",
+    "verified_kubejs": "2101.7.2-build.381",
+    "verified_ftb_quests": "2101.1.38"
+  },
+  "registry": {
+    "items_only": [
+      "skycore:stone_fragment",
+      "skycore:mineral_residue",
+      "skycore:primordial_fuel",
+      "skycore:condensate",
+      "skycore:life_embryo"
+    ],
+    "blocks_with_same_id_items": [
+      "skycore:rock_core",
+      "skycore:stone_workbench",
+      "skycore:mineral_soil"
+    ],
+    "recipe_types_and_serializers": [
+      "skycore:stone_processing",
+      "skycore:germination"
+    ],
+    "vanilla_materials": [
+      "minecraft:quartz",
+      "minecraft:redstone",
+      "minecraft:oak_log",
+      "minecraft:oak_leaves"
+    ]
+  },
+  "core_extraction": {
+    "interaction": "empty_main_hand_right_click",
+    "cooldown_scope": "rock_core_block",
+    "cooldown_ticks": 20,
+    "results": [
+      { "id": "skycore:stone_fragment", "count": 2 },
+      { "id": "skycore:mineral_residue", "count": 1 }
+    ],
+    "milestone": "skycore:ch01/core_extracted"
+  },
+  "recipe_examples": [
+    {
+      "id": "skycore:ch01/primordial_fuel",
+      "json": {
+        "type": "minecraft:crafting_shapeless",
+        "ingredients": [
+          { "item": "skycore:mineral_residue" },
+          { "item": "skycore:mineral_residue" },
+          { "item": "skycore:mineral_residue" },
+          { "item": "skycore:mineral_residue" }
+        ],
+        "result": { "id": "skycore:primordial_fuel", "count": 1 }
+      }
+    },
+    {
+      "id": "skycore:ch01/stone_workbench",
+      "json": {
+        "type": "minecraft:crafting_shaped",
+        "pattern": ["SS", "SS"],
+        "key": { "S": { "item": "skycore:stone_fragment" } },
+        "result": { "id": "skycore:stone_workbench", "count": 1 }
+      }
+    },
+    {
+      "id": "skycore:ch01/minerals",
+      "json": {
+        "type": "skycore:stone_processing",
+        "inputs": [
+          { "ingredient": { "item": "skycore:stone_fragment" }, "count": 4 }
+        ],
+        "fuel": { "ingredient": { "item": "skycore:primordial_fuel" }, "count": 1 },
+        "results": [
+          { "id": "minecraft:quartz", "count": 1 },
+          { "id": "minecraft:redstone", "count": 1 }
+        ],
+        "duration_ticks": 200,
+        "required_milestone": "skycore:ch01/workbench_placed"
+      }
+    },
+    {
+      "id": "skycore:ch01/condensate",
+      "json": {
+        "type": "skycore:stone_processing",
+        "inputs": [
+          { "ingredient": { "item": "minecraft:quartz" }, "count": 1 },
+          { "ingredient": { "item": "minecraft:redstone" }, "count": 1 }
+        ],
+        "fuel": { "ingredient": { "item": "skycore:primordial_fuel" }, "count": 1 },
+        "results": [{ "id": "skycore:condensate", "count": 2 }],
+        "duration_ticks": 200,
+        "required_milestone": "skycore:ch01/minerals_refined"
+      }
+    },
+    {
+      "id": "skycore:ch01/mineral_soil",
+      "json": {
+        "type": "skycore:stone_processing",
+        "inputs": [
+          { "ingredient": { "item": "skycore:stone_fragment" }, "count": 2 },
+          { "ingredient": { "item": "skycore:mineral_residue" }, "count": 2 },
+          { "ingredient": { "item": "skycore:condensate" }, "count": 1 }
+        ],
+        "results": [{ "id": "skycore:mineral_soil", "count": 1 }],
+        "duration_ticks": 100,
+        "required_milestone": "skycore:ch01/condensate_obtained"
+      }
+    },
+    {
+      "id": "skycore:ch01/life_embryo",
+      "json": {
+        "type": "skycore:stone_processing",
+        "inputs": [
+          { "ingredient": { "item": "skycore:mineral_soil" }, "count": 1 },
+          { "ingredient": { "item": "skycore:condensate" }, "count": 1 },
+          { "ingredient": { "item": "minecraft:quartz" }, "count": 1 },
+          { "ingredient": { "item": "minecraft:redstone" }, "count": 1 }
+        ],
+        "fuel": { "ingredient": { "item": "skycore:primordial_fuel" }, "count": 1 },
+        "results": [{ "id": "skycore:life_embryo", "count": 1 }],
+        "duration_ticks": 400,
+        "required_milestone": "skycore:ch01/condensate_obtained"
+      }
+    },
+    {
+      "id": "skycore:ch01/first_tree",
+      "json": {
+        "type": "skycore:germination",
+        "soil": "skycore:mineral_soil",
+        "seed": { "ingredient": { "item": "skycore:life_embryo" }, "count": 1 },
+        "nourishment": { "ingredient": { "item": "skycore:condensate" }, "count": 1 },
+        "tree": "minecraft:oak",
+        "duration_ticks": 1200,
+        "required_milestone": "skycore:ch01/life_embryo_created"
+      }
+    }
+  ],
+  "milestones": [
+    {
+      "id": "skycore:ch01/core_extracted",
+      "trigger": "owned_core_extraction_committed",
+      "requires": []
+    },
+    {
+      "id": "skycore:ch01/workbench_placed",
+      "trigger": "owned_workbench_placed",
+      "requires": ["skycore:ch01/core_extracted"]
+    },
+    {
+      "id": "skycore:ch01/minerals_refined",
+      "trigger_recipe": "skycore:ch01/minerals",
+      "requires": ["skycore:ch01/workbench_placed"]
+    },
+    {
+      "id": "skycore:ch01/condensate_obtained",
+      "trigger_recipe": "skycore:ch01/condensate",
+      "requires": ["skycore:ch01/minerals_refined"]
+    },
+    {
+      "id": "skycore:ch01/life_embryo_created",
+      "trigger_recipe": "skycore:ch01/life_embryo",
+      "requires": ["skycore:ch01/condensate_obtained"]
+    },
+    {
+      "id": "skycore:ch01/first_tree",
+      "trigger_recipe": "skycore:ch01/first_tree",
+      "requires": ["skycore:ch01/life_embryo_created"],
+      "unlocks_chapter": 2
+    }
+  ],
+  "read_api": {
+    "class": "dev.skycore.api.SkyCoreApi",
+    "methods": [
+      "static boolean hasMilestone(ServerPlayer player, String milestoneId)",
+      "static String snapshotJson(ServerPlayer player)"
+    ],
+    "snapshot_schema_version": 1,
+    "snapshot_nullable_until_team_ready": true,
+    "initial_unlocked_chapter": 1,
+    "event": {
+      "class": "dev.skycore.api.event.TeamMilestoneGrantedEvent",
+      "bus": "NeoForge_game_bus",
+      "getters": ["getTeamId", "getMilestoneId", "getUnlockedChapter"]
+    }
+  },
+  "reserved_future_milestones": {
+    "nether_gate": "skycore:ch03/storm_restored",
+    "end_gate": "skycore:ch05/cognition_substrate"
+  }
+}

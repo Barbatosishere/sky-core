@@ -1,0 +1,21 @@
+// Invoked by tools/run_fullpack_smoke.py after taking a verified config/script snapshot.
+// The separate source set deliberately does not inherit main's outputs or its small QA classpath.
+sourceSets { packSmoke }
+neoForge.addModdingDependenciesTo(sourceSets.packSmoke)
+
+dependencies {
+    packSmokeRuntimeOnly files(fileTree("${pack_minecraft_dir}/mods") { include '*.jar' })
+}
+
+neoForge.runs {
+    fullPackSmokeServer {
+        server()
+        sourceSet = sourceSets.packSmoke
+        loadedMods = []
+        gameDirectory = file(providers.gradleProperty('fullpack_smoke_dir').get())
+        jvmArguments.addAll('-Xmx8G', '-Djava.awt.headless=true')
+        programArguments.addAll('--nogui', '--universe',
+                file(providers.gradleProperty('fullpack_smoke_dir').get()).absolutePath,
+                '--world', 'smoke-world', '--port', '0')
+    }
+}

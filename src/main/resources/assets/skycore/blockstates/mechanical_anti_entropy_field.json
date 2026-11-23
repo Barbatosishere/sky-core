@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "skycore:block/mechanical_anti_entropy_field"
+    }
+  }
+}

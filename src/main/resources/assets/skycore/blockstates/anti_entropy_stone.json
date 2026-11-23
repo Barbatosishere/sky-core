@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "skycore:block/anti_entropy_stone"
+    }
+  }
+}

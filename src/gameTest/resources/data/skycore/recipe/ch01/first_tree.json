@@ -1,0 +1,19 @@
+{
+  "type": "skycore:germination",
+  "soil": "skycore:mineral_soil",
+  "seed": {
+    "ingredient": {
+      "item": "skycore:life_embryo"
+    },
+    "count": 1
+  },
+  "nourishment": {
+    "ingredient": {
+      "item": "skycore:condensate"
+    },
+    "count": 1
+  },
+  "tree": "minecraft:oak",
+  "duration_ticks": 1200,
+  "required_milestone": "skycore:ch01/life_embryo_created"
+}

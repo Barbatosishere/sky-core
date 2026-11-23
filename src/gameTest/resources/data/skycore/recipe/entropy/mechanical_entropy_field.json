@@ -1,0 +1,43 @@
+{
+  "type": "skycore:stone_processing",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "skycore:stone_fragment"
+      },
+      "count": 8
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:quartz"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:redstone"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "skycore:anti_entropy_stone"
+      },
+      "count": 1
+    }
+  ],
+  "fuel": {
+    "ingredient": {
+      "item": "skycore:primordial_fuel"
+    },
+    "count": 1
+  },
+  "results": [
+    {
+      "id": "skycore:mechanical_entropy_field",
+      "count": 1
+    }
+  ],
+  "duration_ticks": 400,
+  "required_milestone": "skycore:ch01/minerals_refined"
+}

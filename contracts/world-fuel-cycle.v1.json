@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "core_version": "0.1.4",
+  "environment": "All world-item processing and synthesis require open sky; covered locations pause without clearing progress.",
+  "collector": {"item": "skycore:world_activity", "interval_ticks": 1200, "automation": "extract-only from any side"},
+  "activation": {"input": "skycore:transmutation_powder", "output": "skycore:active_transmutation_agent", "duration_ticks": 3800, "condition": "ordinary daylight detector output at the dropped item is zero"},
+  "combination": {"machine": "skycore:world_fuel_synthesizer", "obtain": "Consume one held furnace by right-clicking the own-team anti-entropy field; field is retained", "inputs": ["skycore:active_transmutation_agent", "skycore:world_activity"], "outputs": ["skycore:crude_world_fuel", "skycore:anti_entropy_stone", "skycore:transmutation_residue"], "ratio": "1:1 inputs to one of each output", "automation": {"top": "world activity only", "horizontal": "active transmutation agent only", "bottom": "three outputs only"}, "blocked_output": "no partial consumption or production"},
+  "refinement": {"input": "skycore:crude_world_fuel", "output": "skycore:world_fuel", "duration_ticks": 4800, "condition": "inverted daylight detector output at the dropped item is zero", "residue_chance_per_item": 0.05},
+  "washing": {"input": "skycore:transmutation_residue", "output": "skycore:transmutation_powder", "ratio": "1:1", "duration_ticks_per_item": 30, "method": "Open-sky flowing water only; source water does not wash; flow is not consumed", "mixer": {"type": "create:mixing", "residue": 1, "water_mb": 100, "powder": 1, "processing_ticks": 30, "heated": false}, "bucket_crafting": false},
+  "material_safety": "Processing materials, world fuel and anti-entropy stone items are immune to fire, lava and explosion damage; void fall restores the saved release position and suspends gravity.",
+  "progress_component": "skycore:world_fuel_progress",
+  "owner_component": "skycore:world_fuel_owner",
+  "persistence": "Progress follows the stack through pickup, containers, droppers, chunk unloading and server restarts; no offline catch-up. Processing materials do not use the normal five-minute item expiry.",
+  "production_evidence": "Only real refinement grants production evidence to the recorded dropper or throwing player team. Outputs without recorded provenance do not grant team evidence.",
+  "compatibility": "Registry IDs and existing entropy schemas are retained. Old collector slots become extract-only recovery slots; pending activation/refinement ticks migrate to their material stacks."
+}

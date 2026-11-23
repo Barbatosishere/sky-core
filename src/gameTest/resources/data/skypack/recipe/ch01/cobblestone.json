@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "skycore:stone_fragment"
+    }
+  ],
+  "result": {
+    "id": "minecraft:cobblestone",
+    "count": 1
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SF",
+    "RS"
+  ],
+  "key": {
+    "S": {
+      "item": "skycore:stone_fragment"
+    },
+    "F": {
+      "item": "skycore:primordial_fuel"
+    },
+    "R": {
+      "item": "skycore:mineral_residue"
+    }
+  },
+  "result": {
+    "id": "skycore:mechanical_anti_entropy_field",
+    "count": 1
+  }
+}
