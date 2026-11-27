@@ -1,0 +1,2105 @@
+{
+  "generated_utc": "2026-11-25T14:51:30.542918+00:00",
+  "decision": "retain_locked_baseline",
+  "new_core_candidate": null,
+  "baseline_core": {
+    "file": "skycore-0.2.1-neoforge-1.21.1.jar",
+    "sha256": "9c982b2dc5a0184e1efddff9bc558c49c14fc5fcd72ae21432b6334ba3ff793a"
+  },
+  "baseline_lock_sha256": "b6e7b9b5342d40cce0255deab06a4f0abc5d39a99564b198e8189cfbfcb5f1d1",
+  "mods_lock_sha256": "7369f26ba3465e0772e65e60d22251c841a4679c9b22ad999436e5207b0c0334",
+  "templates": [
+    {
+      "side": "client",
+      "mods": "D:\\MC\\PrismLauncher_minecraft\\1.21.1(1)\\perf-qa-20261125\\client-template\\minecraft\\mods",
+      "verified_jars": 286,
+      "core_file": "D:\\MC\\PrismLauncher_minecraft\\1.21.1(1)\\perf-qa-20261125\\client-template\\minecraft\\mods\\skycore-0.2.1-neoforge-1.21.1.jar",
+      "core_sha256": "9c982b2dc5a0184e1efddff9bc558c49c14fc5fcd72ae21432b6334ba3ff793a"
+    },
+    {
+      "side": "server",
+      "mods": "D:\\MC\\PrismLauncher_minecraft\\1.21.1(1)\\perf-qa-20261125\\server-baseline-v2\\template\\mods",
+      "verified_jars": 265,
+      "core_file": "D:\\MC\\PrismLauncher_minecraft\\1.21.1(1)\\perf-qa-20261125\\server-baseline-v2\\template\\mods\\skycore-0.2.1-neoforge-1.21.1.jar",
+      "core_sha256": "9c982b2dc5a0184e1efddff9bc558c49c14fc5fcd72ae21432b6334ba3ff793a"
+    }
+  ],
+  "client_timeout_audit": [
+    {
+      "run_id": "client-b2",
+      "verified_evidence_files": 23,
+      "timeout_dumps": [
+        {
+          "path": "D:\\MC\\PrismLauncher_minecraft\\1.21.1(1)\\perf-qa-20261125\\runs\\client-b2\\save-threads-1.txt",
+          "sha256": "e596e42f3518c15350dc53016467b6e2945cd8d1e19c7300c638393abe98b714",
+          "core_frame_count": 0,
+          "render_in_disconnect": true,
+          "render_in_glfw_wait": true,
+          "server_state": "java.lang.Thread.State: TIMED_WAITING (parking)",
+          "server_in_tick_wait": true
+        },
+        {
+          "path": "D:\\MC\\PrismLauncher_minecraft\\1.21.1(1)\\perf-qa-20261125\\runs\\client-b2\\save-threads-2.txt",
+          "sha256": "f6dc127de32d82de8c09b315915a87eb5989c871491be1be3aa0efc865652cf4",
+          "core_frame_count": 0,
+          "render_in_disconnect": true,
+          "render_in_glfw_wait": true,
+          "server_state": "java.lang.Thread.State: TIMED_WAITING (parking)",
+          "server_in_tick_wait": true
+        }
+      ]
+    },
+    {
+      "run_id": "client-b4",
+      "verified_evidence_files": 23,
+      "timeout_dumps": [
+        {
+          "path": "D:\\MC\\PrismLauncher_minecraft\\1.21.1(1)\\perf-qa-20261125\\runs\\client-b4\\save-threads-1.txt",
+          "sha256": "4315c98d49fe1464acbbf36e3c4e45fe6f4239c3f849fadf702f094ed4a8fe60",
+          "core_frame_count": 0,
+          "render_in_disconnect": true,
+          "render_in_glfw_wait": true,
+          "server_state": "java.lang.Thread.State: TIMED_WAITING (parking)",
+          "server_in_tick_wait": true
+        },
+        {
+          "path": "D:\\MC\\PrismLauncher_minecraft\\1.21.1(1)\\perf-qa-20261125\\runs\\client-b4\\save-threads-2.txt",
+          "sha256": "7948642a5e3197705d2eeef8cfb0dd0d1517f7c066ed70b3cb5e1f264b5bc070",
+          "core_frame_count": 0,
+          "render_in_disconnect": true,
+          "render_in_glfw_wait": false,
+          "server_state": "java.lang.Thread.State: TIMED_WAITING (parking)",
+          "server_in_tick_wait": true
+        }
+      ]
+    },
+    {
+      "run_id": "client-b6",
+      "verified_evidence_files": 23,
+      "timeout_dumps": [
+        {
+          "path": "D:\\MC\\PrismLauncher_minecraft\\1.21.1(1)\\perf-qa-20261125\\runs\\client-b6\\save-threads-1.txt",
+          "sha256": "9a659ff3eb84a44449e410b53892cc3de3705043f14a4c9f86e88261b1ff6015",
+          "core_frame_count": 0,
+          "render_in_disconnect": true,
+          "render_in_glfw_wait": true,
+          "server_state": "java.lang.Thread.State: TIMED_WAITING (parking)",
+          "server_in_tick_wait": true
+        },
+        {
+          "path": "D:\\MC\\PrismLauncher_minecraft\\1.21.1(1)\\perf-qa-20261125\\runs\\client-b6\\save-threads-2.txt",
+          "sha256": "09bafc03ba5bea765341478986ddb5780989070bfb40082529c060a8d6509b97",
+          "core_frame_count": 0,
+          "render_in_disconnect": true,
+          "render_in_glfw_wait": true,
+          "server_state": "java.lang.Thread.State: TIMED_WAITING (parking)",
+          "server_in_tick_wait": true
+        }
+      ]
+    }
+  ],
+  "server_runs": [
+    {
+      "baseline": {
+        "run_id": "server-empty-b1",
+        "workload": "empty",
+        "ticks": 6000,
+        "mspt_median": 3.0033000000000003,
+        "mspt_p95": 10.8761,
+        "max_mspt": 262.2195,
+        "ticks_over_50ms": 4,
+        "jfr_start_offset_ms": 557.959,
+        "jfr_server_samples": 1792,
+        "jfr_skycore_inclusive_samples": 158,
+        "jfr_server_leaf_top12": [
+          [
+            "net.minecraft.server.level.ChunkMap$$Lambda+0x0000000806865df0.1678641710.accept",
+            269
+          ],
+          [
+            "tv.soaryn.xycraft.core.content.systems.LevelSystemBase.tick",
+            215
+          ],
+          [
+            "java.util.HashMap.getNode",
+            116
+          ],
+          [
+            "net.minecraft.world.level.levelgen.BitRandomSource.nextInt",
+            73
+          ],
+          [
+            "java.util.IdentityHashMap.get",
+            59
+          ],
+          [
+            "java.util.WeakHashMap.matchesKey",
+            51
+          ],
+          [
+            "net.minecraft.server.level.ServerChunkCache$MainThreadExecutor.pollTask",
+            39
+          ],
+          [
+            "java.util.HashMap.put",
+            36
+          ],
+          [
+            "java.util.Collections$UnmodifiableCollection.forEach",
+            33
+          ],
+          [
+            "java.util.Comparator.lambda$comparing$77a9974f$1",
+            32
+          ],
+          [
+            "net.neoforged.neoforge.common.util.Lazy.get",
+            31
+          ],
+          [
+            "java.util.HashMap$HashIterator.<init>",
+            28
+          ]
+        ],
+        "gc_pauses_in_window_approx": 26,
+        "max_gc_pause_in_window_ms_approx": 29.319,
+        "startup_catalog_ms": [
+          10164
+        ],
+        "startup_first_list_latency_ms": 15807.4328,
+        "feed_max_dispatch_offset_ms": null,
+        "save_flush_ms": [
+          3926.1922,
+          4136.9661
+        ],
+        "reopen": "pass: empty team world"
+      },
+      "profile": {
+        "recording": "D:\\MC\\PrismLauncher_minecraft\\1.21.1(1)\\perf-qa-20261125\\server-baseline-v2\\runs\\server-empty-b1\\initial\\server.jfr",
+        "sha256": "fdd4a6c9b9b9950d93e8a85882c95a02c0bda61fbfc38b5c0d7a1851eb142958",
+        "server_execution_samples_with_stack": 1792,
+        "core_inclusive_samples": 158,
+        "core_inclusive_percent": 8.816964285714286,
+        "core_leaf_samples": 11,
+        "catalog_inclusive_samples": 0,
+        "core_methods_inclusive": [
+          [
+            "dev.skycore.journey.JourneyWorlds.weather",
+            108
+          ],
+          [
+            "dev.skycore.journey.JourneyWorlds.slot",
+            74
+          ],
+          [
+            "dev.skycore.journey.JourneyWorlds.owner",
+            62
+          ],
+          [
+            "dev.skycore.entropy.EntropyEvents$$Lambda+0x0000000802b5ee90.413423987.accept",
+            49
+          ],
+          [
+            "dev.skycore.entropy.EntropyEvents.tick",
+            49
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.tick",
+            49
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.explosions",
+            48
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend$$Lambda+0x0000000806aae3c8.1801076462.accept",
+            44
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.lambda$explosions$12",
+            44
+          ],
+          [
+            "dev.skycore.journey.JourneyWorldData.owner",
+            16
+          ],
+          [
+            "dev.skycore.progress.TeamProgressData.get",
+            10
+          ],
+          [
+            "dev.skycore.journey.JourneyWorldData.get",
+            4
+          ],
+          [
+            "dev.skycore.entropy.EntropyExplosionSchedule.tick",
+            3
+          ],
+          [
+            "dev.skycore.progress.Milestone.find",
+            2
+          ],
+          [
+            "dev.skycore.progress.TeamProgressData.has",
+            2
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.rotate",
+            1
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.plants",
+            1
+          ],
+          [
+            "dev.skycore.journey.JourneyEvents$$Lambda+0x0000000802bc1f08.1762530148.accept",
+            1
+          ]
+        ],
+        "core_leaf_methods": [
+          [
+            "dev.skycore.progress.TeamProgressData.get",
+            4
+          ],
+          [
+            "dev.skycore.entropy.EntropyExplosionSchedule.tick",
+            3
+          ],
+          [
+            "dev.skycore.journey.JourneyWorlds.weather",
+            2
+          ],
+          [
+            "dev.skycore.journey.JourneyWorlds.slot",
+            1
+          ],
+          [
+            "dev.skycore.journey.JourneyEvents$$Lambda+0x0000000802bc1f08.1762530148.accept",
+            1
+          ]
+        ],
+        "leaf_under_core_top20": [
+          [
+            "java.util.HashMap.put",
+            36
+          ],
+          [
+            "java.util.regex.Pattern.sequence",
+            13
+          ],
+          [
+            "java.util.regex.Pattern.atom",
+            10
+          ],
+          [
+            "java.util.regex.Pattern.expr",
+            9
+          ],
+          [
+            "java.util.stream.FindOps$FindOp.evaluateSequential",
+            8
+          ],
+          [
+            "java.util.regex.Pattern.compile",
+            8
+          ],
+          [
+            "java.util.regex.Pattern$BnM.optimize",
+            8
+          ],
+          [
+            "java.util.HashMap.resize",
+            6
+          ],
+          [
+            "java.util.HashMap.getNode",
+            6
+          ],
+          [
+            "java.util.stream.ReferencePipeline$2$1.accept",
+            6
+          ],
+          [
+            "dev.skycore.progress.TeamProgressData.get",
+            4
+          ],
+          [
+            "java.util.regex.Pattern.closure",
+            4
+          ],
+          [
+            "java.util.Map.computeIfAbsent",
+            4
+          ],
+          [
+            "dev.skycore.entropy.EntropyExplosionSchedule.tick",
+            3
+          ],
+          [
+            "java.util.regex.Pattern.range",
+            2
+          ],
+          [
+            "java.util.regex.Pattern.group0",
+            2
+          ],
+          [
+            "java.util.regex.Pattern$Branch.add",
+            2
+          ],
+          [
+            "dev.skycore.journey.JourneyWorlds.weather",
+            2
+          ],
+          [
+            "java.util.regex.Pattern.single",
+            2
+          ],
+          [
+            "java.util.HashMap$EntrySpliterator.tryAdvance",
+            2
+          ]
+        ]
+      }
+    },
+    {
+      "baseline": {
+        "run_id": "server-empty-b2",
+        "workload": "empty",
+        "ticks": 6000,
+        "mspt_median": 2.85175,
+        "mspt_p95": 9.3368,
+        "max_mspt": 282.8514,
+        "ticks_over_50ms": 3,
+        "jfr_start_offset_ms": 531.753,
+        "jfr_server_samples": 1770,
+        "jfr_skycore_inclusive_samples": 147,
+        "jfr_server_leaf_top12": [
+          [
+            "net.minecraft.server.level.ChunkMap$$Lambda+0x0000000806845770.59547161.accept",
+            271
+          ],
+          [
+            "tv.soaryn.xycraft.core.content.systems.LevelSystemBase.tick",
+            214
+          ],
+          [
+            "java.util.HashMap.getNode",
+            120
+          ],
+          [
+            "net.minecraft.world.level.levelgen.BitRandomSource.nextInt",
+            83
+          ],
+          [
+            "net.neoforged.neoforge.attachment.AttachmentHolder.getData",
+            49
+          ],
+          [
+            "java.util.WeakHashMap.get",
+            47
+          ],
+          [
+            "java.util.IdentityHashMap.get",
+            45
+          ],
+          [
+            "java.util.HashMap.put",
+            40
+          ],
+          [
+            "net.neoforged.bus.EventBus.post",
+            40
+          ],
+          [
+            "it.unimi.dsi.fastutil.PriorityQueue.isEmpty",
+            35
+          ],
+          [
+            "java.util.Collections$UnmodifiableCollection.forEach",
+            33
+          ],
+          [
+            "java.util.Comparator.lambda$comparing$77a9974f$1",
+            30
+          ]
+        ],
+        "gc_pauses_in_window_approx": 29,
+        "max_gc_pause_in_window_ms_approx": 25.205,
+        "startup_catalog_ms": [
+          10216
+        ],
+        "startup_first_list_latency_ms": 16956.7532,
+        "feed_max_dispatch_offset_ms": null,
+        "save_flush_ms": [
+          3734.8418,
+          3766.4534
+        ],
+        "reopen": "pass: empty team world"
+      },
+      "profile": {
+        "recording": "D:\\MC\\PrismLauncher_minecraft\\1.21.1(1)\\perf-qa-20261125\\server-baseline-v2\\runs\\server-empty-b2\\initial\\server.jfr",
+        "sha256": "a9567cb149e9be1ed16a2f488a71cbc354c7c19ecc0248893937f3450a072f10",
+        "server_execution_samples_with_stack": 1770,
+        "core_inclusive_samples": 147,
+        "core_inclusive_percent": 8.305084745762711,
+        "core_leaf_samples": 6,
+        "catalog_inclusive_samples": 0,
+        "core_methods_inclusive": [
+          [
+            "dev.skycore.journey.JourneyWorlds.weather",
+            94
+          ],
+          [
+            "dev.skycore.journey.JourneyWorlds.slot",
+            66
+          ],
+          [
+            "dev.skycore.entropy.EntropyEvents$$Lambda+0x0000000802b73c28.542890083.accept",
+            53
+          ],
+          [
+            "dev.skycore.entropy.EntropyEvents.tick",
+            53
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.tick",
+            53
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.explosions",
+            49
+          ],
+          [
+            "dev.skycore.journey.JourneyWorlds.owner",
+            47
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend$$Lambda+0x0000000806a8daa8.1225824791.accept",
+            45
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.lambda$explosions$12",
+            45
+          ],
+          [
+            "dev.skycore.journey.JourneyWorldData.owner",
+            18
+          ],
+          [
+            "dev.skycore.progress.TeamProgressData.get",
+            7
+          ],
+          [
+            "dev.skycore.journey.JourneyWorldData$$Lambda+0x0000000806a81e38.884663214.test",
+            3
+          ],
+          [
+            "dev.skycore.journey.JourneyWorldData.get",
+            3
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.rotate",
+            3
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.plants",
+            3
+          ],
+          [
+            "dev.skycore.entropy.EntropyExplosionSchedule.tick",
+            2
+          ]
+        ],
+        "core_leaf_methods": [
+          [
+            "dev.skycore.journey.JourneyWorldData$$Lambda+0x0000000806a81e38.884663214.test",
+            3
+          ],
+          [
+            "dev.skycore.entropy.EntropyExplosionSchedule.tick",
+            2
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.tick",
+            1
+          ]
+        ],
+        "leaf_under_core_top20": [
+          [
+            "java.util.HashMap.put",
+            40
+          ],
+          [
+            "java.util.regex.Pattern.atom",
+            17
+          ],
+          [
+            "java.util.regex.Matcher.reset",
+            7
+          ],
+          [
+            "java.util.stream.ReferencePipeline$2$1.accept",
+            6
+          ],
+          [
+            "java.util.regex.Pattern.sequence",
+            6
+          ],
+          [
+            "java.util.regex.Pattern$BnM.optimize",
+            6
+          ],
+          [
+            "java.util.regex.Pattern$Slice.match",
+            5
+          ],
+          [
+            "java.util.HashMap.getNode",
+            5
+          ],
+          [
+            "java.util.stream.FindOps$FindOp.evaluateSequential",
+            5
+          ],
+          [
+            "java.util.regex.Pattern.expr",
+            4
+          ],
+          [
+            "dev.skycore.journey.JourneyWorldData$$Lambda+0x0000000806a81e38.884663214.test",
+            3
+          ],
+          [
+            "java.util.regex.Matcher.match",
+            3
+          ],
+          [
+            "java.util.HashMap.resize",
+            3
+          ],
+          [
+            "java.util.regex.Pattern.closure",
+            3
+          ],
+          [
+            "java.util.HashMap.putVal",
+            3
+          ],
+          [
+            "java.util.regex.Pattern.compile",
+            2
+          ],
+          [
+            "java.util.regex.Pattern.single",
+            2
+          ],
+          [
+            "java.util.Map.computeIfAbsent",
+            2
+          ],
+          [
+            "java.util.regex.Pattern$BmpCharProperty.match",
+            2
+          ],
+          [
+            "java.util.regex.Pattern.newSlice",
+            2
+          ]
+        ]
+      }
+    },
+    {
+      "baseline": {
+        "run_id": "server-empty-b3",
+        "workload": "empty",
+        "ticks": 6000,
+        "mspt_median": 2.89755,
+        "mspt_p95": 9.2342,
+        "max_mspt": 269.3873,
+        "ticks_over_50ms": 7,
+        "jfr_start_offset_ms": 535.147,
+        "jfr_server_samples": 1708,
+        "jfr_skycore_inclusive_samples": 168,
+        "jfr_server_leaf_top12": [
+          [
+            "net.minecraft.server.level.ChunkMap$$Lambda+0x0000000806842ec0.926922415.accept",
+            247
+          ],
+          [
+            "tv.soaryn.xycraft.core.content.systems.LevelSystemBase.tick",
+            191
+          ],
+          [
+            "java.util.HashMap.getNode",
+            110
+          ],
+          [
+            "java.util.IdentityHashMap.get",
+            93
+          ],
+          [
+            "net.minecraft.world.level.levelgen.BitRandomSource.nextInt",
+            85
+          ],
+          [
+            "net.minecraft.server.level.ServerChunkCache$MainThreadExecutor.pollTask",
+            47
+          ],
+          [
+            "java.util.HashMap.putVal",
+            41
+          ],
+          [
+            "java.util.WeakHashMap.matchesKey",
+            40
+          ],
+          [
+            "java.util.Collections$UnmodifiableCollection.forEach",
+            36
+          ],
+          [
+            "java.util.HashMap.computeIfAbsent",
+            33
+          ],
+          [
+            "net.neoforged.neoforge.attachment.IAttachmentHolder.getData",
+            31
+          ],
+          [
+            "java.util.ArrayList.clear",
+            25
+          ]
+        ],
+        "gc_pauses_in_window_approx": 25,
+        "max_gc_pause_in_window_ms_approx": 26.418,
+        "startup_catalog_ms": [
+          9824
+        ],
+        "startup_first_list_latency_ms": 16132.5529,
+        "feed_max_dispatch_offset_ms": null,
+        "save_flush_ms": [
+          3937.3273,
+          4393.1309
+        ],
+        "reopen": "pass: empty team world"
+      },
+      "profile": {
+        "recording": "D:\\MC\\PrismLauncher_minecraft\\1.21.1(1)\\perf-qa-20261125\\server-baseline-v2\\runs\\server-empty-b3\\initial\\server.jfr",
+        "sha256": "5edbdcafbe5c915dcb86dee8b330277c9a93ba2ad4ea8c48865fe04bcad66e59",
+        "server_execution_samples_with_stack": 1708,
+        "core_inclusive_samples": 168,
+        "core_inclusive_percent": 9.836065573770492,
+        "core_leaf_samples": 7,
+        "catalog_inclusive_samples": 0,
+        "core_methods_inclusive": [
+          [
+            "dev.skycore.journey.JourneyWorlds.weather",
+            104
+          ],
+          [
+            "dev.skycore.journey.JourneyWorlds.slot",
+            83
+          ],
+          [
+            "dev.skycore.entropy.EntropyEvents$$Lambda+0x0000000802ba63c0.1627720487.accept",
+            64
+          ],
+          [
+            "dev.skycore.entropy.EntropyEvents.tick",
+            64
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.tick",
+            64
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.explosions",
+            58
+          ],
+          [
+            "dev.skycore.journey.JourneyWorlds.owner",
+            47
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend$$Lambda+0x0000000806a8f990.1415334557.accept",
+            46
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.lambda$explosions$12",
+            46
+          ],
+          [
+            "dev.skycore.journey.JourneyWorldData.owner",
+            11
+          ],
+          [
+            "dev.skycore.entropy.EntropyExplosionSchedule.tick",
+            7
+          ],
+          [
+            "dev.skycore.progress.TeamProgressData.get",
+            6
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.rotate",
+            4
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.plants",
+            4
+          ],
+          [
+            "dev.skycore.journey.JourneyWorldData.get",
+            2
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend$$Lambda+0x0000000806a8fbb8.1694270588.test",
+            1
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.lambda$explosions$13",
+            1
+          ],
+          [
+            "dev.skycore.progress.JourneyMilestone.find",
+            1
+          ],
+          [
+            "dev.skycore.progress.TeamProgressData$$Lambda+0x0000000806a82480.1731337931.get",
+            1
+          ],
+          [
+            "dev.skycore.progress.TeamProgressData.lambda$has$2",
+            1
+          ],
+          [
+            "dev.skycore.progress.TeamProgressData.has",
+            1
+          ],
+          [
+            "dev.skycore.journey.JourneyWorldData.state",
+            1
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend$Settings.read",
+            1
+          ]
+        ],
+        "core_leaf_methods": [
+          [
+            "dev.skycore.entropy.EntropyExplosionSchedule.tick",
+            6
+          ],
+          [
+            "dev.skycore.journey.JourneyWorlds.slot",
+            1
+          ]
+        ],
+        "leaf_under_core_top20": [
+          [
+            "java.util.HashMap.putVal",
+            38
+          ],
+          [
+            "java.util.regex.Pattern.sequence",
+            13
+          ],
+          [
+            "java.util.regex.Pattern.compile",
+            12
+          ],
+          [
+            "java.util.regex.Pattern.atom",
+            11
+          ],
+          [
+            "java.util.regex.Pattern.closure",
+            10
+          ],
+          [
+            "java.util.HashMap.resize",
+            9
+          ],
+          [
+            "java.util.HashMap.getNode",
+            8
+          ],
+          [
+            "java.util.regex.Pattern.newSlice",
+            7
+          ],
+          [
+            "dev.skycore.entropy.EntropyExplosionSchedule.tick",
+            6
+          ],
+          [
+            "java.util.regex.Pattern.expr",
+            5
+          ],
+          [
+            "java.util.regex.Pattern$BnM.optimize",
+            4
+          ],
+          [
+            "java.util.stream.ReferencePipeline$2$1.accept",
+            4
+          ],
+          [
+            "java.util.LinkedHashMap$LinkedValues.forEach",
+            3
+          ],
+          [
+            "java.util.regex.Pattern.clazz",
+            3
+          ],
+          [
+            "java.util.stream.Sink$ChainedReference.<init>",
+            3
+          ],
+          [
+            "java.util.stream.FindOps$FindOp.evaluateSequential",
+            3
+          ],
+          [
+            "java.util.regex.Pattern.single",
+            2
+          ],
+          [
+            "java.util.regex.Pattern$Branch.add",
+            2
+          ],
+          [
+            "java.util.regex.Pattern$Slice.match",
+            2
+          ],
+          [
+            "java.util.regex.Matcher.reset",
+            2
+          ]
+        ]
+      }
+    },
+    {
+      "baseline": {
+        "run_id": "server-stone-enclosure-b1",
+        "workload": "single-player-stone-workbench",
+        "ticks": 6000,
+        "mspt_median": 4.3655,
+        "mspt_p95": 11.586,
+        "max_mspt": 407.2774,
+        "ticks_over_50ms": 18,
+        "jfr_start_offset_ms": 595.8290000000001,
+        "jfr_server_samples": 1992,
+        "jfr_skycore_inclusive_samples": 184,
+        "jfr_server_leaf_top12": [
+          [
+            "tv.soaryn.xycraft.core.content.systems.LevelSystemBase.tick",
+            200
+          ],
+          [
+            "net.minecraft.server.level.DistanceManager.runAllUpdates",
+            156
+          ],
+          [
+            "java.util.HashMap.getNode",
+            138
+          ],
+          [
+            "net.minecraft.world.level.levelgen.BitRandomSource.nextInt",
+            77
+          ],
+          [
+            "java.util.HashMap.putVal",
+            53
+          ],
+          [
+            "java.util.WeakHashMap.get",
+            52
+          ],
+          [
+            "net.neoforged.neoforge.attachment.AttachmentHolder.getData",
+            46
+          ],
+          [
+            "java.util.IdentityHashMap.get",
+            42
+          ],
+          [
+            "java.util.Comparator.lambda$comparing$77a9974f$1",
+            40
+          ],
+          [
+            "it.unimi.dsi.fastutil.PriorityQueue.isEmpty",
+            33
+          ],
+          [
+            "it.unimi.dsi.fastutil.longs.LongLinkedOpenHashSet.shiftKeys",
+            33
+          ],
+          [
+            "tv.soaryn.xycraft.core.content.systems.LevelSystemBase$$Lambda+0x0000000806a847d8.119764353.accept",
+            32
+          ]
+        ],
+        "gc_pauses_in_window_approx": 30,
+        "max_gc_pause_in_window_ms_approx": 29.547,
+        "startup_catalog_ms": [
+          10345
+        ],
+        "startup_first_list_latency_ms": 17458.9308,
+        "feed_max_dispatch_offset_ms": 8.0356,
+        "save_flush_ms": [
+          4787.208,
+          7396.6482
+        ],
+        "reopen": "pass: same UUID, position and workbench outputs"
+      },
+      "profile": {
+        "recording": "D:\\MC\\PrismLauncher_minecraft\\1.21.1(1)\\perf-qa-20261125\\server-baseline-v2\\runs\\server-stone-enclosure-b1\\initial\\server.jfr",
+        "sha256": "49a3969035ef83b2f2549e71b9d9e71bbf1fd9cfe04f060ed8dd707329e51baa",
+        "server_execution_samples_with_stack": 1992,
+        "core_inclusive_samples": 184,
+        "core_inclusive_percent": 9.236947791164658,
+        "core_leaf_samples": 9,
+        "catalog_inclusive_samples": 0,
+        "core_methods_inclusive": [
+          [
+            "dev.skycore.journey.JourneyWorlds.weather",
+            100
+          ],
+          [
+            "dev.skycore.journey.JourneyWorlds.slot",
+            81
+          ],
+          [
+            "dev.skycore.entropy.EntropyEvents$$Lambda+0x0000000802b18618.856582624.accept",
+            76
+          ],
+          [
+            "dev.skycore.entropy.EntropyEvents.tick",
+            76
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.tick",
+            76
+          ],
+          [
+            "dev.skycore.journey.JourneyWorlds.owner",
+            58
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.explosions",
+            39
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.plants",
+            37
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend$$Lambda+0x0000000806ab5b80.1702386567.accept",
+            31
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.lambda$explosions$12",
+            31
+          ],
+          [
+            "dev.skycore.journey.JourneyWorldData.owner",
+            9
+          ],
+          [
+            "dev.skycore.progress.TeamProgressData.get",
+            8
+          ],
+          [
+            "dev.skycore.journey.JourneyWorldData.get",
+            5
+          ],
+          [
+            "dev.skycore.entropy.EntropyExplosionSchedule.tick",
+            5
+          ],
+          [
+            "dev.skycore.block.WorkbenchBlockEntity.serverTick",
+            3
+          ],
+          [
+            "dev.skycore.block.CoreBlock$$Lambda+0x0000000806c0a3f0.1009320479.tick",
+            3
+          ],
+          [
+            "dev.skycore.block.CoreBlock.lambda$getTicker$2",
+            3
+          ],
+          [
+            "dev.skycore.progress.TeamProgressData.has",
+            3
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend$$Lambda+0x0000000806c2e4d8.2076565046.test",
+            3
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.lambda$plants$11",
+            3
+          ],
+          [
+            "dev.skycore.journey.WorldRestorerBlock$$Lambda+0x0000000806c09808.1368308255.tick",
+            3
+          ],
+          [
+            "dev.skycore.journey.WorldRestorerBlockEntity.serverTick",
+            3
+          ],
+          [
+            "dev.skycore.journey.WorldRestorerBlock.lambda$getTicker$0",
+            3
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.rotate",
+            2
+          ],
+          [
+            "dev.skycore.block.WorkbenchBlockEntity.lambda$serverTick$0",
+            2
+          ],
+          [
+            "dev.skycore.block.WorkbenchBlockEntity$$Lambda+0x0000000806c424f8.438871948.test",
+            2
+          ],
+          [
+            "dev.skycore.block.WorkbenchBlockEntity$$Lambda+0x0000000806c42bb8.1862672047.apply",
+            2
+          ],
+          [
+            "dev.skycore.progress.Milestone.find",
+            2
+          ],
+          [
+            "dev.skycore.block.WorkbenchBlockEntity.lambda$serverTick$1",
+            2
+          ],
+          [
+            "dev.skycore.journey.JourneyEvents.tick",
+            2
+          ],
+          [
+            "dev.skycore.journey.JourneyEvents$$Lambda+0x0000000802b90688.1548650451.accept",
+            2
+          ],
+          [
+            "dev.skycore.progress.TeamAccess.online",
+            1
+          ],
+          [
+            "dev.skycore.journey.JourneyEvents.lambda$tick$2",
+            1
+          ],
+          [
+            "dev.skycore.progress.TeamProgressData$$Lambda+0x0000000806aa64e0.1073670594.get",
+            1
+          ],
+          [
+            "dev.skycore.progress.JourneyMilestone.find",
+            1
+          ],
+          [
+            "dev.skycore.journey.JourneyEvents$$Lambda+0x0000000806ab6430.219772730.accept",
+            1
+          ],
+          [
+            "dev.skycore.progress.TeamProgressData.lambda$has$2",
+            1
+          ],
+          [
+            "dev.skycore.journey.JourneyWorldData.forEach",
+            1
+          ],
+          [
+            "dev.skycore.recipe.StoneProcessingRecipe$$Lambda+0x0000000806c42df0.810405892.test",
+            1
+          ],
+          [
+            "dev.skycore.recipe.CountedIngredient.matches",
+            1
+          ],
+          [
+            "dev.skycore.block.WorkbenchBlockEntity$$Lambda+0x0000000806c42740.1315267276.test",
+            1
+          ],
+          [
+            "dev.skycore.recipe.StoneProcessingRecipe.matches",
+            1
+          ],
+          [
+            "dev.skycore.block.WorkbenchBlockEntity.lambda$serverTick$2",
+            1
+          ],
+          [
+            "dev.skycore.recipe.StoneProcessingRecipe.consumption",
+            1
+          ],
+          [
+            "dev.skycore.recipe.StoneProcessingRecipe.lambda$consumption$1",
+            1
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.lambda$explosions$13",
+            1
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend$$Lambda+0x0000000806ab5da8.591521040.test",
+            1
+          ]
+        ],
+        "core_leaf_methods": [
+          [
+            "dev.skycore.entropy.EntropyExplosionSchedule.tick",
+            4
+          ],
+          [
+            "dev.skycore.journey.JourneyWorlds.slot",
+            2
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.plants",
+            1
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.lambda$plants$11",
+            1
+          ],
+          [
+            "dev.skycore.progress.TeamProgressData.get",
+            1
+          ]
+        ],
+        "leaf_under_core_top20": [
+          [
+            "java.util.HashMap.putVal",
+            46
+          ],
+          [
+            "java.util.regex.Pattern.atom",
+            13
+          ],
+          [
+            "java.util.regex.Pattern.compile",
+            12
+          ],
+          [
+            "net.minecraft.server.level.GenerationChunkHolder.getChunkIfPresentUnchecked",
+            9
+          ],
+          [
+            "java.util.stream.FindOps$FindOp.evaluateSequential",
+            9
+          ],
+          [
+            "java.util.regex.Pattern.closure",
+            8
+          ],
+          [
+            "java.util.HashMap.getNode",
+            8
+          ],
+          [
+            "java.util.regex.Pattern.sequence",
+            7
+          ],
+          [
+            "java.util.regex.Matcher.reset",
+            6
+          ],
+          [
+            "java.util.regex.Pattern$BnM.optimize",
+            6
+          ],
+          [
+            "java.util.regex.Pattern$Slice.match",
+            5
+          ],
+          [
+            "java.util.regex.Pattern.expr",
+            4
+          ],
+          [
+            "java.util.Map.computeIfAbsent",
+            4
+          ],
+          [
+            "java.util.regex.Pattern.newSlice",
+            4
+          ],
+          [
+            "dev.skycore.entropy.EntropyExplosionSchedule.tick",
+            4
+          ],
+          [
+            "java.util.stream.ReferencePipeline$2$1.accept",
+            3
+          ],
+          [
+            "java.util.regex.Pattern.clazz",
+            3
+          ],
+          [
+            "it.unimi.dsi.fastutil.longs.Long2ObjectLinkedOpenHashMap.get",
+            3
+          ],
+          [
+            "java.util.regex.Pattern.RemoveQEQuoting",
+            3
+          ],
+          [
+            "java.util.LinkedHashMap.newNode",
+            2
+          ]
+        ]
+      }
+    },
+    {
+      "baseline": {
+        "run_id": "server-stone-enclosure-b2",
+        "workload": "single-player-stone-workbench",
+        "ticks": 6000,
+        "mspt_median": 4.5962,
+        "mspt_p95": 12.177,
+        "max_mspt": 432.8745,
+        "ticks_over_50ms": 22,
+        "jfr_start_offset_ms": 586.324,
+        "jfr_server_samples": 2342,
+        "jfr_skycore_inclusive_samples": 207,
+        "jfr_server_leaf_top12": [
+          [
+            "tv.soaryn.xycraft.core.content.systems.LevelSystemBase.tick",
+            224
+          ],
+          [
+            "net.minecraft.server.level.DistanceManager.runAllUpdates",
+            142
+          ],
+          [
+            "net.minecraft.server.level.ServerChunkCache.runDistanceManagerUpdates",
+            117
+          ],
+          [
+            "java.util.HashMap.getNode",
+            107
+          ],
+          [
+            "java.util.IdentityHashMap.get",
+            83
+          ],
+          [
+            "net.minecraft.world.level.levelgen.BitRandomSource.nextInt",
+            75
+          ],
+          [
+            "java.util.WeakHashMap.matchesKey",
+            69
+          ],
+          [
+            "java.util.HashMap.putVal",
+            67
+          ],
+          [
+            "net.minecraft.server.level.ChunkMap.processUnloads",
+            58
+          ],
+          [
+            "net.minecraft.server.MinecraftServer.runServer",
+            46
+          ],
+          [
+            "net.minecraft.server.level.ServerChunkCache$MainThreadExecutor.pollTask",
+            45
+          ],
+          [
+            "tv.soaryn.xycraft.core.content.systems.LevelSystemBase$$Lambda+0x0000000806a76928.802724895.accept",
+            34
+          ]
+        ],
+        "gc_pauses_in_window_approx": 30,
+        "max_gc_pause_in_window_ms_approx": 31.813,
+        "startup_catalog_ms": [
+          11272
+        ],
+        "startup_first_list_latency_ms": 17314.5379,
+        "feed_max_dispatch_offset_ms": 10.8196,
+        "save_flush_ms": [
+          4807.1774,
+          6313.8526
+        ],
+        "reopen": "pass: same UUID, position and workbench outputs"
+      },
+      "profile": {
+        "recording": "D:\\MC\\PrismLauncher_minecraft\\1.21.1(1)\\perf-qa-20261125\\server-baseline-v2\\runs\\server-stone-enclosure-b2\\initial\\server.jfr",
+        "sha256": "56f1b3de412d1a01cfb6d1ee7d848bb0bb5499d4fedf271284d64e26fce3af05",
+        "server_execution_samples_with_stack": 2342,
+        "core_inclusive_samples": 207,
+        "core_inclusive_percent": 8.83859948761742,
+        "core_leaf_samples": 6,
+        "catalog_inclusive_samples": 0,
+        "core_methods_inclusive": [
+          [
+            "dev.skycore.entropy.EntropyEvents.tick",
+            102
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.tick",
+            102
+          ],
+          [
+            "dev.skycore.entropy.EntropyEvents$$Lambda+0x0000000802b39000.447790532.accept",
+            102
+          ],
+          [
+            "dev.skycore.journey.JourneyWorlds.weather",
+            100
+          ],
+          [
+            "dev.skycore.journey.JourneyWorlds.slot",
+            74
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.plants",
+            53
+          ],
+          [
+            "dev.skycore.journey.JourneyWorlds.owner",
+            52
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.explosions",
+            49
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend$$Lambda+0x0000000806aa5aa8.1841372482.accept",
+            46
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.lambda$explosions$12",
+            46
+          ],
+          [
+            "dev.skycore.journey.JourneyWorldData.owner",
+            16
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.rotate",
+            8
+          ],
+          [
+            "dev.skycore.progress.TeamProgressData.get",
+            6
+          ],
+          [
+            "dev.skycore.journey.JourneyWorldData.get",
+            6
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.dimension",
+            2
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.lambda$plants$11",
+            2
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend$$Lambda+0x0000000806c220e0.1001090409.test",
+            2
+          ],
+          [
+            "dev.skycore.entropy.EntropyExplosionSchedule.tick",
+            2
+          ],
+          [
+            "dev.skycore.block.OwnedInventoryBlockEntity.saveAdditional",
+            1
+          ],
+          [
+            "dev.skycore.journey.WorldRestorerBlockEntity.saveAdditional",
+            1
+          ],
+          [
+            "dev.skycore.journey.JourneyEvents.tick",
+            1
+          ],
+          [
+            "dev.skycore.journey.JourneyEvents$$Lambda+0x0000000802bc5de8.1318191228.accept",
+            1
+          ],
+          [
+            "dev.skycore.worldfuel.WorldFuelSafety$$Lambda+0x0000000802b7b978.1839636324.accept",
+            1
+          ],
+          [
+            "dev.skycore.worldfuel.WorldFuelSafety.protectedMaterial",
+            1
+          ],
+          [
+            "dev.skycore.worldfuel.WorldFuelSafety.tick",
+            1
+          ],
+          [
+            "dev.skycore.journey.JourneyEvents.guardRealm",
+            1
+          ],
+          [
+            "dev.skycore.journey.JourneyEvents$$Lambda+0x0000000802bc2000.1167198481.accept",
+            1
+          ],
+          [
+            "dev.skycore.journey.JourneyEvents.foreignRealm",
+            1
+          ],
+          [
+            "dev.skycore.progress.TeamProgressData$$Lambda+0x0000000806a9b368.871773050.apply",
+            1
+          ],
+          [
+            "dev.skycore.progress.TeamProgressData.lambda$has$1",
+            1
+          ],
+          [
+            "dev.skycore.progress.TeamProgressData$$Lambda+0x0000000806a9b150.116420069.get",
+            1
+          ],
+          [
+            "dev.skycore.progress.TeamProgressData.lambda$has$2",
+            1
+          ],
+          [
+            "dev.skycore.progress.TeamProgressData.has",
+            1
+          ],
+          [
+            "dev.skycore.block.CoreBlock$$Lambda+0x0000000806c01518.773481625.tick",
+            1
+          ],
+          [
+            "dev.skycore.block.WorkbenchBlockEntity.serverTick",
+            1
+          ],
+          [
+            "dev.skycore.block.CoreBlock.lambda$getTicker$2",
+            1
+          ]
+        ],
+        "core_leaf_methods": [
+          [
+            "dev.skycore.progress.TeamProgressData.get",
+            3
+          ],
+          [
+            "dev.skycore.entropy.EntropyExplosionSchedule.tick",
+            2
+          ],
+          [
+            "dev.skycore.journey.JourneyWorlds.slot",
+            1
+          ]
+        ],
+        "leaf_under_core_top20": [
+          [
+            "java.util.HashMap.putVal",
+            61
+          ],
+          [
+            "net.minecraft.server.level.GenerationChunkHolder.getChunkIfPresentUnchecked",
+            21
+          ],
+          [
+            "java.util.regex.Pattern.atom",
+            19
+          ],
+          [
+            "java.util.regex.Pattern$BnM.optimize",
+            10
+          ],
+          [
+            "java.util.regex.Pattern.compile",
+            7
+          ],
+          [
+            "java.util.stream.FindOps$FindOp.evaluateSequential",
+            7
+          ],
+          [
+            "java.util.regex.Pattern.clazz",
+            5
+          ],
+          [
+            "java.util.regex.Pattern.sequence",
+            5
+          ],
+          [
+            "java.util.regex.Pattern.expr",
+            5
+          ],
+          [
+            "net.minecraft.world.level.Level.getProfiler",
+            3
+          ],
+          [
+            "java.util.Map.computeIfAbsent",
+            3
+          ],
+          [
+            "java.util.WeakHashMap.matchesKey",
+            3
+          ],
+          [
+            "dev.skycore.progress.TeamProgressData.get",
+            3
+          ],
+          [
+            "java.util.regex.Pattern$Start.<init>",
+            3
+          ],
+          [
+            "java.util.regex.Pattern.newSlice",
+            3
+          ],
+          [
+            "it.unimi.dsi.fastutil.longs.Long2ObjectLinkedOpenHashMap.get",
+            3
+          ],
+          [
+            "java.util.regex.Pattern$Slice.match",
+            3
+          ],
+          [
+            "java.lang.invoke.DirectMethodHandle$Holder.invokeStatic",
+            2
+          ],
+          [
+            "net.minecraft.world.level.chunk.PalettedContainer.maybeHas",
+            2
+          ],
+          [
+            "java.util.ImmutableCollections$SetN.probe",
+            2
+          ]
+        ]
+      }
+    },
+    {
+      "baseline": {
+        "run_id": "server-stone-enclosure-b3",
+        "workload": "single-player-stone-workbench",
+        "ticks": 6000,
+        "mspt_median": 4.59235,
+        "mspt_p95": 11.9807,
+        "max_mspt": 401.806,
+        "ticks_over_50ms": 20,
+        "jfr_start_offset_ms": 630.015,
+        "jfr_server_samples": 2285,
+        "jfr_skycore_inclusive_samples": 177,
+        "jfr_server_leaf_top12": [
+          [
+            "tv.soaryn.xycraft.core.content.systems.LevelSystemBase.tick",
+            221
+          ],
+          [
+            "net.minecraft.server.level.DistanceManager.runAllUpdates",
+            171
+          ],
+          [
+            "java.util.HashMap.getNode",
+            144
+          ],
+          [
+            "java.util.IdentityHashMap.get",
+            93
+          ],
+          [
+            "net.minecraft.world.level.levelgen.BitRandomSource.nextInt",
+            73
+          ],
+          [
+            "net.minecraft.server.MinecraftServer.runServer",
+            58
+          ],
+          [
+            "java.util.WeakHashMap.get",
+            51
+          ],
+          [
+            "java.util.HashMap.putVal",
+            49
+          ],
+          [
+            "it.unimi.dsi.fastutil.PriorityQueue.isEmpty",
+            43
+          ],
+          [
+            "java.util.HashMap.computeIfAbsent",
+            43
+          ],
+          [
+            "net.minecraft.world.level.lighting.DynamicGraphMinFixedPoint.runUpdates",
+            39
+          ],
+          [
+            "java.util.HashMap$HashIterator.<init>",
+            38
+          ]
+        ],
+        "gc_pauses_in_window_approx": 18,
+        "max_gc_pause_in_window_ms_approx": 36.646,
+        "startup_catalog_ms": [
+          10868
+        ],
+        "startup_first_list_latency_ms": 16606.633,
+        "feed_max_dispatch_offset_ms": 10.1087,
+        "save_flush_ms": [
+          5154.4801,
+          6422.5341
+        ],
+        "reopen": "pass: same UUID, position and workbench outputs"
+      },
+      "profile": {
+        "recording": "D:\\MC\\PrismLauncher_minecraft\\1.21.1(1)\\perf-qa-20261125\\server-baseline-v2\\runs\\server-stone-enclosure-b3\\initial\\server.jfr",
+        "sha256": "3c63d3f7c2a58ad14dbdd46be639ff65409cde5fab16c3ba0fe4aaaaeeb900df",
+        "server_execution_samples_with_stack": 2285,
+        "core_inclusive_samples": 177,
+        "core_inclusive_percent": 7.746170678336981,
+        "core_leaf_samples": 5,
+        "catalog_inclusive_samples": 0,
+        "core_methods_inclusive": [
+          [
+            "dev.skycore.journey.JourneyWorlds.weather",
+            101
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.tick",
+            72
+          ],
+          [
+            "dev.skycore.entropy.EntropyEvents.tick",
+            72
+          ],
+          [
+            "dev.skycore.entropy.EntropyEvents$$Lambda+0x0000000802b52d60.1937479081.accept",
+            72
+          ],
+          [
+            "dev.skycore.journey.JourneyWorlds.slot",
+            72
+          ],
+          [
+            "dev.skycore.journey.JourneyWorlds.owner",
+            52
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.plants",
+            42
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.explosions",
+            27
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend$$Lambda+0x0000000806a8f998.1711481705.accept",
+            26
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.lambda$explosions$12",
+            26
+          ],
+          [
+            "dev.skycore.journey.JourneyWorldData.owner",
+            14
+          ],
+          [
+            "dev.skycore.progress.TeamProgressData.get",
+            9
+          ],
+          [
+            "dev.skycore.journey.JourneyWorldData.get",
+            3
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.rotate",
+            3
+          ],
+          [
+            "dev.skycore.block.CoreBlock$$Lambda+0x0000000806bef820.708421635.tick",
+            2
+          ],
+          [
+            "dev.skycore.block.WorkbenchBlockEntity.serverTick",
+            2
+          ],
+          [
+            "dev.skycore.block.CoreBlock.lambda$getTicker$2",
+            2
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.dimension",
+            1
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend$Settings.equals",
+            1
+          ],
+          [
+            "dev.skycore.block.OwnedInventoryBlockEntity.saveAdditional",
+            1
+          ],
+          [
+            "dev.skycore.journey.WorldRestorerBlockEntity.saveAdditional",
+            1
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend$Settings.read",
+            1
+          ],
+          [
+            "dev.skycore.block.WorkbenchBlockEntity.setChanged",
+            1
+          ],
+          [
+            "dev.skycore.block.WorkbenchBlockEntity.rememberInputs",
+            1
+          ],
+          [
+            "dev.skycore.journey.JourneyEvents.guardRealm",
+            1
+          ],
+          [
+            "dev.skycore.journey.JourneyEvents.foreignRealm",
+            1
+          ],
+          [
+            "dev.skycore.journey.JourneyEvents$$Lambda+0x0000000802be2f00.1653679247.accept",
+            1
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.lambda$plants$11",
+            1
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend$$Lambda+0x0000000806c12728.213477208.test",
+            1
+          ],
+          [
+            "dev.skycore.entropy.EntropyExplosionSchedule.tick",
+            1
+          ]
+        ],
+        "core_leaf_methods": [
+          [
+            "dev.skycore.journey.JourneyWorlds.weather",
+            2
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend$Settings.read",
+            1
+          ],
+          [
+            "dev.skycore.entropy.EntropyExplosionSchedule.tick",
+            1
+          ],
+          [
+            "dev.skycore.entropy.ServerEntropyBackend.rotate",
+            1
+          ]
+        ],
+        "leaf_under_core_top20": [
+          [
+            "java.util.HashMap.putVal",
+            39
+          ],
+          [
+            "net.minecraft.server.level.GenerationChunkHolder.getChunkIfPresentUnchecked",
+            19
+          ],
+          [
+            "java.util.regex.Pattern.atom",
+            15
+          ],
+          [
+            "java.util.regex.Pattern$BnM.optimize",
+            9
+          ],
+          [
+            "java.util.HashMap.getNode",
+            7
+          ],
+          [
+            "java.util.regex.Matcher.reset",
+            6
+          ],
+          [
+            "java.util.regex.Pattern.sequence",
+            6
+          ],
+          [
+            "java.util.regex.Pattern.compile",
+            5
+          ],
+          [
+            "java.util.stream.FindOps$FindOp.evaluateSequential",
+            5
+          ],
+          [
+            "java.util.regex.Pattern.clazz",
+            4
+          ],
+          [
+            "java.util.regex.Pattern.newSlice",
+            4
+          ],
+          [
+            "java.util.stream.Sink$ChainedReference.<init>",
+            3
+          ],
+          [
+            "net.minecraft.world.level.storage.DimensionDataStorage.get",
+            3
+          ],
+          [
+            "net.minecraft.world.level.Level.getProfiler",
+            3
+          ],
+          [
+            "java.util.WeakHashMap.get",
+            3
+          ],
+          [
+            "java.util.stream.ReferencePipeline$2$1.accept",
+            3
+          ],
+          [
+            "java.util.regex.Pattern$Slice.match",
+            3
+          ],
+          [
+            "java.util.regex.Pattern.RemoveQEQuoting",
+            2
+          ],
+          [
+            "java.util.regex.Pattern.expr",
+            2
+          ],
+          [
+            "java.util.stream.AbstractPipeline.copyIntoWithCancel",
+            2
+          ]
+        ]
+      }
+    }
+  ],
+  "startup_profile": {
+    "recording": "D:\\MC\\PrismLauncher_minecraft\\1.21.1(1)\\perf-qa-20261125\\server-baseline-v2\\runs\\server-pilot-stone\\initial\\startup-pilot.jfr",
+    "sha256": "c43dc59aefae83edc040da53cd604b57d85692b216c2600f148dc8a191d36cb6",
+    "server_execution_samples_with_stack": 545,
+    "core_inclusive_samples": 0,
+    "core_inclusive_percent": 0.0,
+    "core_leaf_samples": 0,
+    "catalog_inclusive_samples": 484,
+    "core_methods_inclusive": [],
+    "core_leaf_methods": [],
+    "leaf_under_core_top20": []
+  },
+  "server_groups": {
+    "empty": {
+      "count": 3,
+      "mspt_median": {
+        "median_of_runs": 2.89755,
+        "min": 2.85175,
+        "max": 3.0033000000000003
+      },
+      "mspt_p95": {
+        "median_of_runs": 9.3368,
+        "min": 9.2342,
+        "max": 10.8761
+      }
+    },
+    "single-player-stone-workbench": {
+      "count": 3,
+      "mspt_median": {
+        "median_of_runs": 4.59235,
+        "min": 4.3655,
+        "max": 4.5962
+      },
+      "mspt_p95": {
+        "median_of_runs": 11.9807,
+        "min": 11.586,
+        "max": 12.177
+      }
+    }
+  },
+  "product_source_unchanged_during_audit": true,
+  "product_source_at_audit": {
+    "files": {
+      "build.gradle": "b145895ed5d890d8503ae17ef67a2075e5227919f711555d45f45b37e82ea517",
+      "gradle.properties": "e73fae9ddda3db4ec7f4df0be635527012e3adb067e2a780eed18ccb4ac2915b",
+      "settings.gradle": "7c4aa05bf89a6ff9721dc59a207d84edc5c9e03cb1d10c2b8336c211832a90df",
+      "src/gameTest/java/dev/skycore/entropy/EntropyRestartProbe.java": "a0bc4ac120bbc5499113a47fe7b1927329dd163af1f3c8e219665769169bc966",
+      "src/gameTest/java/dev/skycore/entropy/EntropyTests.java": "fa6ac70333451c0649eab27ac53bb6863a0bbdb88ac67c599b7a53f64ff5dbf3",
+      "src/gameTest/java/dev/skycore/entropy/WorldActivityCollectorTests.java": "d758ca64c9f0d416e80ac361b1c91e5f5de6c1bdf9153a4feb8dff88ecedb886",
+      "src/gameTest/java/dev/skycore/entropy/WorldFuelSynthesizerTests.java": "df427830ddda8af814bf4850a416e3689013164379c881dcfd76808dfe78e6e3",
+      "src/gameTest/java/dev/skycore/gametest/ChapterOneTests.java": "39af8e2ee2e7b8d471dd167e3cee71880b04e98a5b5be0ffb465104f5494e835",
+      "src/gameTest/resources/data/skycore/recipe/ch01/condensate.json": "4b3f59e2e7cb1b6ec0f02e46db9b119a5ff1a8f31d0ec9b7fc15ed8653cfe560",
+      "src/gameTest/resources/data/skycore/recipe/ch01/first_tree.json": "ccca76d7ef857156c98aba70ac1358d0ae43ff7ddfecb0b3a09273824cc2394e",
+      "src/gameTest/resources/data/skycore/recipe/ch01/life_embryo.json": "37607182b2c4b8d177a644154c572a3f926ad33cec9a4a7672f887e2507bbb25",
+      "src/gameTest/resources/data/skycore/recipe/ch01/mineral_soil.json": "573cd63acf43e958ee2c8fac5cb18819ca171664055762340ed859077dce1583",
+      "src/gameTest/resources/data/skycore/recipe/ch01/minerals.json": "38db128d4675f31a37c5335eeb4ef66bba00d4e4705d35c38d1782c809f0582b",
+      "src/gameTest/resources/data/skycore/recipe/ch01/primordial_fuel.json": "e2cf18636cc57e6fde97bf629a3db419486c8bf02ea2af04068561f3f1168a1f",
+      "src/gameTest/resources/data/skycore/recipe/ch01/stone_workbench.json": "182209f3f1fdbd4162c47c781d9020e4fc4d89356c7f765a72bf63e2b4d5b728",
+      "src/gameTest/resources/data/skycore/recipe/entropy/mechanical_anti_entropy_field.json": "aaaa282e3f5bb6b68fa82ed37f3b0f82beb0290bfaf4de7bf4bdc15e9cea401b",
+      "src/gameTest/resources/data/skycore/recipe/entropy/mechanical_entropy_field.json": "88499cfec46e3a46617086a64ecbe9f1e6e7b761c3142d2783c41750ca8d1e29",
+      "src/gameTest/resources/data/skycore/recipe/entropy/world_fuel.json": "9f5fe4f33e5cb84c0c59c3efd245feb98c406e9d795c814b546f5e7f61af6ef2",
+      "src/gameTest/resources/data/skycore/structure/empty.nbt": "00539c922a9e5937298a103b517175b820bc985d971cc84910d2963c309e54a8",
+      "src/gameTest/resources/data/skycore/structure/entropy_start.nbt": "7d2cf5f082637fb7eb78253f8d41f30db4bcf69c6cdb00cc31f95acfb9cf9ae9",
+      "src/gameTest/resources/data/skypack/recipe/ch01/cobblestone.json": "f87f32d9ba8bec783cb32894eebe05d88656da2e79f60076c7dd74d0db3cbb06",
+      "src/gameTest/resources/data/skypack/recipe/ch01/natural_soil.json": "450f65758b8e44d86aa6441e5f874c706d2cdbefdade017c2030e138d65439c5",
+      "src/gameTest/resources/data/skypack/recipe/ch02/first_lava.json": "5007f115f56997c52d14895a5cdd20100d7917c4e5eaa79984bba945158e4ab8",
+      "src/gameTest/resources/data/skypack/recipe/ch02/first_water.json": "4961341a3f87b9bb113aca02938f56c9d489dccea9813ee35ddab75f2248d19a",
+      "src/gameTest/resources/data/skypack/recipe/ch02/nutrient_fruit.json": "e088591f23b9b9e14c736a8792df4d8dc1d332a4d0bee5e5e9eecc474ed4c61f",
+      "src/journeyTest/java/dev/skycore/entropy/JourneyRestartProbe.java": "60a48ca38a15d30015ca4d9a779c5e987a9c7d1cc159fcfe38ef92ec3b66b71e",
+      "src/journeyTest/java/dev/skycore/entropy/JourneyTests.java": "0608eb43d18be22b9689abe0fd6491a94715a4f7ea30ba28d5a9720d40cc3996",
+      "src/main/java/dev/skycore/api/entropy/EntropyContract.java": "8eea72249cb86f7864b0a376f5f21928bfc1f0b49ed662ebac24a1e5ecd837ba",
+      "src/main/java/dev/skycore/api/event/TeamEntropyEvidenceGrantedEvent.java": "3ffb3cdbb88d5cf50425400a2c09cb77f2e279f9add0cda88609726836c94866",
+      "src/main/java/dev/skycore/api/event/TeamMilestoneGrantedEvent.java": "d5d2907293c102197bafe0ae793a5c236cfb16b402ceb10d6f05fee91519d2f4",
+      "src/main/java/dev/skycore/api/SkyCoreApi.java": "530307fe888416bcd260796ac13d693da0f899096c8297d82afc14ebce7f98b7",
+      "src/main/java/dev/skycore/block/CoreBlock.java": "307d7773a2d1af98a25ecec934050ecd024fa173ca5e3014745c8ec6ab63df88",
+      "src/main/java/dev/skycore/block/OwnedBlockEntity.java": "3ad95c23a13b7e155c83f9aed7e1a46dc10947a2224234e3da87093d97ee2881",
+      "src/main/java/dev/skycore/block/OwnedBlockItem.java": "cb46e15c625024c7ed2e9d5da08cfcf65cddc5611d075cc31637de32da29abe1",
+      "src/main/java/dev/skycore/block/OwnedInventoryBlockEntity.java": "3bb3dc32758962f5a01158277575bc123e084dbcd4e148effb0ee47e661f9715",
+      "src/main/java/dev/skycore/block/RockCoreBlockEntity.java": "e0ab8a4eca43e9f5e71618f492d6e21206b3643aa763a1860ad743b34292b3c3",
+      "src/main/java/dev/skycore/block/SoilBlockEntity.java": "855a4d4b7d0ce93c645ca3a96980ab869a3fc89b47620ca0ce185900cc7622d2",
+      "src/main/java/dev/skycore/block/WorkbenchBlockEntity.java": "1bd20fd6a0e6444fe3e33f523d39388222b5f18e81378a748097228fbc18f90e",
+      "src/main/java/dev/skycore/block/WorldActivityCollectorBlock.java": "72deb137632b6af4573966083e315137cc9ee6ddc1c93f2f780473182bdc62dc",
+      "src/main/java/dev/skycore/block/WorldActivityCollectorBlockEntity.java": "ad0a9514182f979404da3d8961e08578538418ee16ea85d8cd3050c52afef1bb",
+      "src/main/java/dev/skycore/block/WorldFuelSynthesizerBlock.java": "8053944558b00ef6baf1fbf127d14cbdc143ee565380e94c016bcada460b84f4",
+      "src/main/java/dev/skycore/block/WorldFuelSynthesizerBlockEntity.java": "aaf07aa992671abf7e1f8bc240054223ef8b74a66030c443ba30e9517d46e64a",
+      "src/main/java/dev/skycore/client/ClientEvents.java": "94a7aaf33ad0c55f6f4f32230e63084a2e71d01c99d9ea243abc89646421f645",
+      "src/main/java/dev/skycore/client/WorkbenchScreen.java": "8338f1c2e195ef50293c9449371bd24da323beeaaec8135f7bf2f36ba619cb7f",
+      "src/main/java/dev/skycore/client/WorldFuelSynthesizerScreen.java": "a0d4d66a8d8d51c7b3dd5531857e3ff8100815db14846e08a072729e17edc9b0",
+      "src/main/java/dev/skycore/compat/WorldActivityCollectorJadePlugin.java": "55c4f4c1a39f850a0c67760d16d3d54ba4e66d6654056c9192009a365f9ff20e",
+      "src/main/java/dev/skycore/CoreContent.java": "c7d50991c57a60f79be08e0807b9fecdc7c6c36857041d2d2d6414c0f78bc137",
+      "src/main/java/dev/skycore/entropy/EntropyBackend.java": "87cb807b7e0af7d26566a453667db862f5f1892629feefd1afd5422c57413f92",
+      "src/main/java/dev/skycore/entropy/EntropyCommands.java": "d6774312b65fd6d36f0bfd78ab9894d0257f48711219d511abc4f9843f79dd4e",
+      "src/main/java/dev/skycore/entropy/EntropyConfig.java": "610446b876521a93911de4315604124ae12b6687f56a309f6b012d53339dd355",
+      "src/main/java/dev/skycore/entropy/EntropyContent.java": "8ae1ead2d6851267ddfcc789fc19b758bd31b22db6f7cf47f24f442f08b9cf58",
+      "src/main/java/dev/skycore/entropy/EntropyEvents.java": "6b4f3b68a899ab60cf326eca0f561034a4b5ae1b824246c1255bced987d12936",
+      "src/main/java/dev/skycore/entropy/EntropyExplosionSchedule.java": "82de422b3dadafa68b9e667eb03e4f53c3ddd286027122902792137e0396e37c",
+      "src/main/java/dev/skycore/entropy/EntropyRules.java": "ff8f0b091e9fc4c3f68b8253e8e4030ca1d33e56fd65726845cad018cb4a7cd4",
+      "src/main/java/dev/skycore/entropy/EntropyRuntime.java": "b3ccae761a1c7f33f39b47c7e055558e7a5c151e9320e24f750df7a3490a09db",
+      "src/main/java/dev/skycore/entropy/EntropySavedData.java": "eef4d1ce55e66521998938908d878721fad0123c6de95772f74a4acec3698192",
+      "src/main/java/dev/skycore/entropy/FieldMachineBlock.java": "5a3377d72638ad459322e4c1ba11bfa03e244f9bffe08e8978d24e5bcd9dae04",
+      "src/main/java/dev/skycore/entropy/FieldMachineBlockEntity.java": "da63a2cb84a248a913882648b66af1306994ede56a897f29c410eb0e265f8da6",
+      "src/main/java/dev/skycore/entropy/ServerEntropyBackend.java": "54ef6fdc9a0ff574f551ed4db79d294917679d175eb9df0c0c063391b278762a",
+      "src/main/java/dev/skycore/journey/FlightGemItem.java": "642131ef8aa3e32b89ae59b48eb5aaba94133fbc66096d7a8c6704bd025002ca",
+      "src/main/java/dev/skycore/journey/JourneyAction.java": "dd8958263a67d17728c3b4a88423470c7940cd070e07fb48ef94d973aee09d36",
+      "src/main/java/dev/skycore/journey/JourneyContent.java": "f509d368ea39b98d71056fede6329eb551d9851bc124c0186d626174e618deae",
+      "src/main/java/dev/skycore/journey/JourneyEvents.java": "deba9493f2a6cd13f03a463ee73f93e42197b66ce4ae5d2591bcfddc6e2c4f2c",
+      "src/main/java/dev/skycore/journey/JourneyWorldData.java": "4e2a9d00b686337850125b494129e61b10aa98ce2eeaed90c7916d21c4ce0554",
+      "src/main/java/dev/skycore/journey/JourneyWorlds.java": "c4c2900f9d0ac1b862e358f15f6977ef99d921aa24fa2b00de566cad2b8ab0fe",
+      "src/main/java/dev/skycore/journey/mixin/JourneyPortalMixin.java": "2e5ea376ed946bddbe99a2e771c7ab283ba7b49870bbbfce1562ed1da0405c98",
+      "src/main/java/dev/skycore/journey/mixin/ServerLevelWeatherMixin.java": "eeae7cc3c624bb3a68d1b1e26fce0f3936a694460463005afc3aea51c59aa35a",
+      "src/main/java/dev/skycore/journey/mixin/VillagerRestockMixin.java": "0de55dac538d7acfb8234aec9a1c9d26754e96540b538f71b6ed60ae2d4219a0",
+      "src/main/java/dev/skycore/journey/WorldRestorerBlock.java": "3f305aa43ceb7a9608c0633314614625bb0cf05ee8ca777f35fee6540d1fcec5",
+      "src/main/java/dev/skycore/journey/WorldRestorerBlockEntity.java": "75922a1e955186b6696cd0a3f0e4b93f5993dd1d2dcc7ffbfe6052ab86d75696",
+      "src/main/java/dev/skycore/logic/IngredientAllocator.java": "9a70f2605868c78b0d893e14a1b7ffdb239a35a30d415b8d0b8469cb1251436a",
+      "src/main/java/dev/skycore/logic/StackTransactions.java": "1da66b94aa6cd2af3f1ec85945c951121140b4f4026b9b1142fc1f05a487fd38",
+      "src/main/java/dev/skycore/logic/TreeGrowth.java": "a847f17ba5b888d65775b0748c1f158246207ea09787465abeb86b242df07d1d",
+      "src/main/java/dev/skycore/logic/WorldFuelCycle.java": "a6f6ae585340433c1246446df80a07a2f89e0f97f78951f7c2c95c676a751260",
+      "src/main/java/dev/skycore/menu/WorkbenchMenu.java": "314c17bd4f93b8c693ec965fb51d102229d19948b3474207add0bb7009339b8f",
+      "src/main/java/dev/skycore/menu/WorldFuelSynthesizerMenu.java": "b9197dd8ae6c115ea724cbaba84bb0dfcc47d1f033204cc80c62725708fb7103",
+      "src/main/java/dev/skycore/progress/JourneyMilestone.java": "e2b9a2b0807cd5ea4af171bbada83fb8311078bc47df969bd55c1ed40f9c372c",
+      "src/main/java/dev/skycore/progress/Milestone.java": "06b5a372ecb9a552dc696012f0401d0abde673bb20ad655c2f1cf9cc244e2c6b",
+      "src/main/java/dev/skycore/progress/TeamAccess.java": "4a95d0b08cbc6c4a3f770f2a230a3f8edcf99b75936197ed3675e3ba4911a208",
+      "src/main/java/dev/skycore/progress/TeamProgressData.java": "e6955bb0e426289f64abb2cb6cb79938e23330ea4771bee60347f36c0044c4d7",
+      "src/main/java/dev/skycore/recipe/CountedIngredient.java": "9b3e852b1febe161d9e36f31ddf01d2ad5ba13010ba77f559adb1025cc6640cd",
+      "src/main/java/dev/skycore/recipe/GerminationInput.java": "d8c0c2083b9905bc88dc753733e1fecacc8960b0ae910f35b5f3abab0b0e6025",
+      "src/main/java/dev/skycore/recipe/GerminationRecipe.java": "1c16f8d8530392994425cfcc98545138b396b7af4790ba6507fa29b7e691c930",
+      "src/main/java/dev/skycore/recipe/RecipeCodecs.java": "6072e1bf791bf9ae3ccd128600630fa9de2184f3ab10713734767945e64b13ec",
+      "src/main/java/dev/skycore/recipe/RecipeSignature.java": "6aa8acdd838443396275edbf9d53b14612e074122c87f0ac33f0270989e2a921",
+      "src/main/java/dev/skycore/recipe/StoneProcessingRecipe.java": "ca926ba2d6e0a3d5b178c90a0bb607a575116f9b4811dd59534c900717453633",
+      "src/main/java/dev/skycore/recipe/WorkbenchInput.java": "edc87aaae5d318ae3bd92e311b2817d512cf388672bdc8f04cd36cf4034f2b32",
+      "src/main/java/dev/skycore/SkyCore.java": "db9fb0b40e5ac2f30218cd81b08d8d48be073a80b3f6d166f9f180b7a9737a30",
+      "src/main/java/dev/skycore/worldfuel/WorldFuelDaylight.java": "47b5966c7c559954b9ad4e10d8edd318ae59e60601131968ca291144c8dbcad0",
+      "src/main/java/dev/skycore/worldfuel/WorldFuelEvents.java": "9cf0a2110cffd462c4db35f68427d469baf31d55711c6dc0ec6e6dbfe4ea25c5",
+      "src/main/java/dev/skycore/worldfuel/WorldFuelMaterialItem.java": "26821ddbcdec17f924f784fb739b3e7d1ac8c9b824fcc2711d2e9710eb2494d8",
+      "src/main/java/dev/skycore/worldfuel/WorldFuelSafety.java": "2307f165d42ab77a49a723cdd393f7f4f404c8f0724a238eeee5785656a52ea2",
+      "src/main/java/dev/skycore/worldfuel/WorldFuelTransformations.java": "fd09c6a31de60520592957a62b205d54c1957d43a5f9d917f1bfa1093c67f394",
+      "src/main/resources/assets/skycore/blockstates/anti_entropy_stone.json": "8a4c31e06c3b1764cc70d03fcfea28210fca088f200b171b6951cf06f81bec14",
+      "src/main/resources/assets/skycore/blockstates/mechanical_anti_entropy_field.json": "efda46a733eff2dc2a40f3cc70b901ee9831f437932cc54ba23f46e61ed32db6",
+      "src/main/resources/assets/skycore/blockstates/mechanical_entropy_field.json": "e6c510e5e613e54125cd08d269aa06aed4adfa8df3559722f4aed3b4f895224d",
+      "src/main/resources/assets/skycore/blockstates/mineral_soil.json": "d88fb7273a66989e57c838c5acd5ffd7a8f63b93d3cd0cbf77ea5cb2bf565865",
+      "src/main/resources/assets/skycore/blockstates/rock_core.json": "e75f7205182b7e57a00285900f73045da6b60a98a50b4647dd3f4d434abffe3c",
+      "src/main/resources/assets/skycore/blockstates/stone_workbench.json": "c2ad9121414f15ce14654c4154b24b196934c816a2f0dd546d0d42b7230769e8",
+      "src/main/resources/assets/skycore/blockstates/world_activity_collector.json": "17204198f09fe62f79b1434df276bddd3e00538ca61c8321ad2ca38e7a99dc60",
+      "src/main/resources/assets/skycore/blockstates/world_fuel_synthesizer.json": "e95f0b2fa683dabde14da9f63f1e175ec1921bf35dbf40379208522bbb85030f",
+      "src/main/resources/assets/skycore/lang/en_us.json": "641a936dca98e99dfde53b2fcc084f6398f40701d0c9aa9edb3d9b41b5ac42c3",
+      "src/main/resources/assets/skycore/lang/zh_cn.json": "2870f38a64bc2a3fecbd168790353ada2ab9d9368a89f2ae91ff8434b0acf3f4",
+      "src/main/resources/assets/skycore/models/block/anti_entropy_stone.json": "9ac3d408f7d3ff06e0425eac5ef94e2e4186429af26bea3f445cab3fdd551f7f",
+      "src/main/resources/assets/skycore/models/block/mechanical_anti_entropy_field.json": "18932753e8700f6dff6234e03f1be72b9ab58d005118b83c5b3c16b55752cb54",
+      "src/main/resources/assets/skycore/models/block/mechanical_entropy_field.json": "c99a346ea0cb53c2d710970e215cb5c0bc5cc7e69b06626cf06a3b0fd63a3ef6",
+      "src/main/resources/assets/skycore/models/block/mineral_soil.json": "39ec6441eaf4039acd063a636e37a66af5d048a2fc1fe0734eb80c824a920fa2",
+      "src/main/resources/assets/skycore/models/block/rock_core.json": "f7e9cf687bda14c59f6556e9a6d9973e4f2490e8a75b0929ce35865142e6eb28",
+      "src/main/resources/assets/skycore/models/block/stone_workbench.json": "8f01d36dbfb3e3ecda6fab15bff299d15d410b8e98fe4f5740abcbe1904b5bbd",
+      "src/main/resources/assets/skycore/models/block/world_activity_collector.json": "5d74fad5a357c266b1e918f2c2735f234e7b63f7ba43078acddfaa6fe9432cb1",
+      "src/main/resources/assets/skycore/models/block/world_fuel_synthesizer.json": "35ec108be9eed95774b50d90b02b720e1769e5652a88ba4c0660a2aa495cbf5d",
+      "src/main/resources/assets/skycore/models/item/active_transmutation_agent.json": "19892d00070987ed76385f0811e234d0f65edeb0b4f8a0fde251bd442bf57f36",
+      "src/main/resources/assets/skycore/models/item/anti_entropy_stone.json": "4160e92df21dcfbe491313b116499b330778d2912e341e8705e1c0b226117d60",
+      "src/main/resources/assets/skycore/models/item/condensate.json": "937e37ead056ada7cfad05ebff86f49f2b840e33f85e1269c47bd05b7bd50d8d",
+      "src/main/resources/assets/skycore/models/item/crude_world_fuel.json": "51a43fcc08030830e1368e60b8f06ddd8553a5fbac06fa11fa23479853f35d4a",
+      "src/main/resources/assets/skycore/models/item/life_embryo.json": "8c79b55688bcb633202cc4dda3544ee234286eb37fdf6bd9de88bf8499deea9c",
+      "src/main/resources/assets/skycore/models/item/mechanical_anti_entropy_field.json": "7ff79e2dd95b9d5d7637a8eb28524eab0568f776b4c845986b6ee3a75e82542d",
+      "src/main/resources/assets/skycore/models/item/mechanical_entropy_field.json": "19dd0e307a2ed230fca21939e2f0ecd17e39af009ae0c158f89238763ba79504",
+      "src/main/resources/assets/skycore/models/item/mineral_residue.json": "850b5053d5b867aa9d99901c5b9be1aacffd832498bcaf20115f41bf7f5725cd",
+      "src/main/resources/assets/skycore/models/item/mineral_soil.json": "41e9804a7b3dc2d44162010b9484e464628de9e5cb1c510c931105a96ba5b7fb",
+      "src/main/resources/assets/skycore/models/item/primordial_fuel.json": "cc9af7e23ae05fef8244f187c03c564a45cda8e14a71c2c7309a196d4906c378",
+      "src/main/resources/assets/skycore/models/item/rock_core.json": "e7b02baa34021c85aec4a2ae56ff9da8d85c5f61e2ca517f333ef65e8ae833ae",
+      "src/main/resources/assets/skycore/models/item/stone_fragment.json": "44b51c1ac0f240045ac4a3632295495531b6cf67bcee1d4705018245294f69cc",
+      "src/main/resources/assets/skycore/models/item/stone_workbench.json": "a6b84ab591c4c9cb929afa78f0ad553fa7187fecff80f8c6eb789043b4f25d9d",
+      "src/main/resources/assets/skycore/models/item/transmutation_powder.json": "fad36d2cd1c60b6afe9a8445a915ba6d8fd0616993056a88d9462d7fc2ed9500",
+      "src/main/resources/assets/skycore/models/item/transmutation_residue.json": "2e4b6ac989e312fa856c62c5a3002b22c4e4188543587b296e7055024fcb0518",
+      "src/main/resources/assets/skycore/models/item/world_activity.json": "365c095affdd837d612644b729458eb1c9acaef1b9b44412ceab4bc33e96c64d",
+      "src/main/resources/assets/skycore/models/item/world_activity_collector.json": "4438bf8684b3f6cd9a711021803487a52266faca3f9bd228a15c69cbfbe878f8",
+      "src/main/resources/assets/skycore/models/item/world_fuel.json": "659ef85d0850cbdaab7fa9d19fa0ae6029ce2022dcb5367dcc6b975f32681a26",
+      "src/main/resources/assets/skycore/models/item/world_fuel_synthesizer.json": "69a8b52ee0256c81661a6a0e419b5d4465943de599740c30407b78f6c031745d",
+      "src/main/resources/data/minecraft/tags/block/mineable/pickaxe.json": "97339783f7540092b8bf244d24f8490c467a60f15048dce58a60f6ec76cb1d0d",
+      "src/main/resources/data/minecraft/tags/block/mineable/shovel.json": "5101fb794ae2f346d3575253c5b5ca3163975664040b138786c856aa7e04b569",
+      "src/main/resources/data/minecraft/tags/damage_type/bypasses_armor.json": "f791f6e0db5b59f1dd145848b7828c93b461d2c1771ab4f61cddfa081cc9499b",
+      "src/main/resources/data/minecraft/tags/damage_type/bypasses_cooldown.json": "f791f6e0db5b59f1dd145848b7828c93b461d2c1771ab4f61cddfa081cc9499b",
+      "src/main/resources/data/minecraft/tags/damage_type/bypasses_enchantments.json": "f791f6e0db5b59f1dd145848b7828c93b461d2c1771ab4f61cddfa081cc9499b",
+      "src/main/resources/data/minecraft/tags/damage_type/bypasses_resistance.json": "f791f6e0db5b59f1dd145848b7828c93b461d2c1771ab4f61cddfa081cc9499b",
+      "src/main/resources/data/minecraft/tags/damage_type/is_explosion.json": "f22793c44cbe3c04408052319be0cc5bacc7fa83d20a99d7dae87bc766d4893b",
+      "src/main/resources/data/skycore/damage_type/entropy_explosion.json": "182b418643e8154c3d5e50c170d88e8b9393ef1203f09896f700da07b0f19316",
+      "src/main/resources/data/skycore/damage_type/entropy_exposure.json": "fe1426e8f967952906079d4e9f7b05e152aee96f389da32fc6d3d8ed8f394273",
+      "src/main/resources/data/skycore/loot_table/blocks/anti_entropy_stone.json": "a741822af2262e6790cdd428cbecb7509a38d4fd264c5342450c9d94f9717d40",
+      "src/main/resources/data/skycore/loot_table/blocks/mechanical_anti_entropy_field.json": "7b20c9c7fadd0630564ee31853a5b2a39a25b99493cc239fa002434b0443f849",
+      "src/main/resources/data/skycore/loot_table/blocks/mechanical_entropy_field.json": "4093a12701c591ffbf92b3f4d2faf43258bd99b439edee9c33d54cad9b283926",
+      "src/main/resources/data/skycore/loot_table/blocks/mineral_soil.json": "82815ed39e5b8ad855f0a6fbd8958385202b90bebc6cb50680937a0622d6ec12",
+      "src/main/resources/data/skycore/loot_table/blocks/rock_core.json": "7b20c9c7fadd0630564ee31853a5b2a39a25b99493cc239fa002434b0443f849",
+      "src/main/resources/data/skycore/loot_table/blocks/stone_workbench.json": "012b8e9f8accfdb048ed1a570ba802eb2be88ea30b652f9d9c556185ef262217",
+      "src/main/resources/data/skycore/loot_table/blocks/world_activity_collector.json": "1f64bdd1f2f734ed5386e8522cc801066814244ff45f618b9b8f9ab8a5aa1530",
+      "src/main/resources/data/skycore/loot_table/blocks/world_fuel_synthesizer.json": "52a31ad0514022e2977b5ba22235f1f1bcd5f25c6c332be17686bea044977875",
+      "src/main/resources/data/skycore/tags/block/entropy_blastproof.json": "4e5c54846667971a6c14f20e96ece603e2036fd43281e2e7c6fb27ed5f50b706",
+      "src/main/resources/data/skycore/tags/block/entropy_vulnerable_plants.json": "460f0b7e8f2b26477bc75eeb731635295d3dbcd782440bca0b89e4ea1e35d861",
+      "src/main/resources/META-INF/accesstransformer.cfg": "7ff190a4b12a8df5f9efc6e44ec92f05316298e5ffc985ae6899c2e3d1909ca2",
+      "src/main/resources/META-INF/neoforge.mods.toml": "77ff7b27613290146457b88a6e008a61fa0584781cde645f84b21a8b648e8f41",
+      "src/main/resources/pack.mcmeta": "68b2a14a71e3b43b31226f913552492241b047a1d90b0e8ba8786511917e008b",
+      "src/main/resources/skycore.mixins.json": "da8dae2a6e4e4e508d4e910f58584629574b7fa315e23fcd6bb949d2148f6bc3",
+      "src/test/java/dev/skycore/entropy/EntropyExplosionScheduleTest.java": "cdd344a6432239682301291b69b0df4142cfc24c471ebe05d9d0ec397ada0abb",
+      "src/test/java/dev/skycore/entropy/EntropyRulesTest.java": "2bb7498ed5f3b648ea872e5d087dfe660b7e430f71f2a5c9df4673400bb4dc45",
+      "src/test/java/dev/skycore/logic/IngredientAllocatorTest.java": "90bc7807747ec18a336421ca47aeb1e390a6b0833c990faeba09b7bf3f37a505",
+      "src/test/java/dev/skycore/logic/WorldFuelCycleTest.java": "bab731e5cd24a515cdd130054022dda07f4e376fd565b0ae97060c9368a95650"
+    },
+    "existing_diff_sha256": "1a77f6427e1d617030c18bef8a835b0c8ef8980701f23ff7108e7e2ac52e435a"
+  },
+  "limitations": [
+    "Execution samples do not measure exclusive CPU time or expected MSPT savings.",
+    "Core causality for integrated-server save/quit remains unresolved.",
+    "No new candidate, GameTest run or B/C performance run in step 5."
+  ]
+}
