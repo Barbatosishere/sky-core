@@ -4,7 +4,6 @@ import dev.skycore.CoreContent;
 import dev.skycore.block.WorldFuelSynthesizerBlockEntity;
 import dev.skycore.logic.WorldFuelCycle;
 import dev.skycore.worldfuel.WorldFuelDaylight;
-import java.util.concurrent.atomic.AtomicInteger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -129,50 +128,55 @@ public final class WorldFuelSynthesizerTests {
         helper.runAfterDelay(35, () -> {
             helper.assertValueEqual(count(helper, CoreContent.TRANSMUTATION_POWDER.get()), 1, "Only one item washed in the first 1.5 seconds");
             helper.assertValueEqual(flowing.getItem().getCount(), 2, "Processes a stack sequentially");
+            helper.assertTrue(flowing.getAge() >= 30, "Unwashed leftovers keep the original entity age");
             helper.assertTrue(still.isAlive() && still.getItem().getCount() == 1, "Source water does not wash");
         });
-        var paused = new AtomicInteger();
         helper.runAfterDelay(65, () -> {
-            helper.assertValueEqual(count(helper, CoreContent.TRANSMUTATION_POWDER.get()), 2, "Second item requires another 30 ticks; remaining=" + flowing.getItem().getCount()
-                    + ",progress=" + flowing.getItem().getOrDefault(CoreContent.WORLD_FUEL_PROGRESS.get(), 0) + ",alive=" + flowing.isAlive()
-                    + ",fluid=" + level.getFluidState(flow) + ",open=" + WorldFuelDaylight.isOpenSky(level, flow));
+            helper.assertValueEqual(count(helper, CoreContent.TRANSMUTATION_POWDER.get()), 2, "Second item requires another 30 ticks");
+            WorldActivityCollectorTests.seedWork(flowing, WorldFuelCycle.WASHING_TICKS, 29);
             level.setBlock(flow.above(), Blocks.STONE.defaultBlockState(), 3);
         });
-        helper.runAfterDelay(70, () -> paused.set(flowing.getItem().getOrDefault(CoreContent.WORLD_FUEL_PROGRESS.get(), 0)));
         helper.runAfterDelay(90, () -> {
-            helper.assertValueEqual(flowing.getItem().getOrDefault(CoreContent.WORLD_FUEL_PROGRESS.get(), 0), paused.get(), "Roof pauses water processing without clearing progress");
+            helper.assertValueEqual(WorldActivityCollectorTests.workTicks(flowing), 0, "Roof clears the washing timer");
             helper.assertValueEqual(count(helper, CoreContent.TRANSMUTATION_POWDER.get()), 2, "No covered washing");
             level.setBlock(flow.above(), Blocks.AIR.defaultBlockState(), 3);
         });
+        helper.runAfterDelay(110, () -> helper.assertValueEqual(count(helper, CoreContent.TRANSMUTATION_POWDER.get()), 2, "Uncovering requires a full new wash"));
         helper.runAfterDelay(125, () -> {
-            helper.assertValueEqual(count(helper, CoreContent.TRANSMUTATION_POWDER.get()), 3, "Uncovering resumes the last item");
+            helper.assertValueEqual(count(helper, CoreContent.TRANSMUTATION_POWDER.get()), 3, "The last item completes after another uninterrupted wash");
             helper.assertTrue(still.isAlive(), "Source-water item remains unchanged");
             helper.succeed();
         });
     }
 
     @GameTest(template = "empty", batch = "fuel_safety", timeoutTicks = 30)
-    public static void coverPausesDaylightAndHazardsCannotDestroyMaterials(GameTestHelper helper) {
+    public static void coverResetsDaylightAndHazardsCannotDestroyMaterials(GameTestHelper helper) {
         var level = helper.getLevel();
         BlockPos pos = helper.absolutePos(new BlockPos(3, 3, 3));
-        level.setBlock(pos.above(), Blocks.STONE.defaultBlockState(), 3);
         var stack = new ItemStack(CoreContent.CRUDE_WORLD_FUEL.get(), 2);
-        stack.set(CoreContent.WORLD_FUEL_PROGRESS.get(), 777);
-        var entity = dropped(helper, stack, pos);
-        helper.runAfterDelay(3, () -> {
-            helper.assertValueEqual(WorldFuelDaylight.phase(level, pos), WorldFuelCycle.Phase.TWILIGHT, "Covered space never becomes a valid night or day processing environment");
-            helper.assertValueEqual(entity.getItem().getOrDefault(CoreContent.WORLD_FUEL_PROGRESS.get(), 0), 777, "Cover preserves pending progress");
-            helper.assertFalse(entity.hurt(level.damageSources().lava(), 100), "Lava cannot destroy the material");
-            helper.assertFalse(entity.hurt(level.damageSources().inFire(), 100), "Fire cannot destroy the material");
-            helper.assertFalse(entity.hurt(level.damageSources().explosion(null, null), 100), "Explosion cannot destroy the material");
-            entity.setPos(pos.getX() + 0.5, level.getMinBuildHeight() - 10, pos.getZ() + 0.5);
-        });
-        helper.runAfterDelay(8, () -> {
-            helper.assertTrue(entity.isAlive() && entity.getY() >= pos.getY() && entity.isNoGravity(), "Void returns material to its safe origin and suspends it");
-            helper.assertValueEqual(entity.getItem().getCount(), 2, "Hazards do not alter quantity");
-            helper.assertValueEqual(entity.getItem().getOrDefault(CoreContent.WORLD_FUEL_PROGRESS.get(), 0), 777, "Void recovery preserves progress");
-            helper.succeed();
-        });
+        helper.startSequence()
+                .thenWaitUntil(() -> helper.assertTrue(WorldFuelDaylight.isOpenSky(level, pos), "Fixture starts under open sky"))
+                .thenExecute(() -> {
+                    helper.assertTrue(level.setBlock(pos.above(), Blocks.STONE.defaultBlockState(), 3), "Roof placed");
+                    helper.assertFalse(WorldFuelDaylight.isOpenSky(level, pos), "A newly placed roof blocks open sky immediately");
+                    helper.assertValueEqual(WorldFuelDaylight.phase(level, pos), WorldFuelCycle.Phase.TWILIGHT,
+                            "A newly placed roof invalidates processing immediately");
+                    var entity = dropped(helper, stack, pos);
+                    WorldActivityCollectorTests.seedWork(entity, WorldFuelCycle.REFINEMENT_TICKS, 777);
+                    helper.runAfterDelay(3, () -> {
+                        helper.assertValueEqual(WorldActivityCollectorTests.workTicks(entity), 0, "Cover clears refinement progress");
+                        helper.assertFalse(entity.hurt(level.damageSources().lava(), 100), "Lava cannot destroy the material");
+                        helper.assertFalse(entity.hurt(level.damageSources().inFire(), 100), "Fire cannot destroy the material");
+                        helper.assertFalse(entity.hurt(level.damageSources().explosion(null, null), 100), "Explosion cannot destroy the material");
+                        entity.setPos(pos.getX() + 0.5, level.getMinBuildHeight() - 10, pos.getZ() + 0.5);
+                    });
+                    helper.runAfterDelay(8, () -> {
+                        helper.assertTrue(entity.isAlive() && entity.getY() >= pos.getY() && entity.isNoGravity(), "Void returns material to its safe origin and suspends it");
+                        helper.assertValueEqual(entity.getItem().getCount(), 2, "Hazards do not alter quantity");
+                        helper.assertValueEqual(WorldActivityCollectorTests.workTicks(entity), 0, "Void recovery keeps the dropped material without restoring progress");
+                        helper.succeed();
+                    });
+                });
     }
 
     private static ItemEntity dropped(GameTestHelper helper, ItemStack stack, BlockPos pos) {

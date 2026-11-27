@@ -2,7 +2,7 @@
 
 Sky Core 是 Minecraft 1.21.1 / NeoForge 21.1.265 / Java 21 的空岛整合包核心模组，mod ID 为 `skycore`。正式配方和 FTB Quests 任务由整合包提供。
 
-当前版本为 `0.2.1`，提供 64 组队伍世界槽、六章主线进度、分队门户路由、世界燃料与熵增庇护。该版本修复了原版门户绕过和持续降水阻断晴昼积累的问题，并将队伍账本从 schema 1 迁移到 schema 2。升级前请备份整组存档。[下载 JAR 和校验文件](https://github.com/Barbatosishere/sky-core/releases/tag/v0.2.1)
+当前版本为 `0.2.2`，提供 64 组队伍世界槽、六章主线进度、分队门户路由、世界燃料与熵增庇护。该版本改为连续计时：世界燃料材料的转化进度记在掉落物上，条件中断、被拾起或落入虚空都会清零，掉落物按原版规则 5 分钟后消失；白天还要求天空光照为 15 且太阳在地平线以上。世界活性收集器去掉了界面，改由 Jade 显示进度，并把产物推入下方容器。熵增爆炸不再破坏 `skycore:entropy_blastproof` 标签中的方块。升级前请备份整组存档。[下载 JAR 和校验文件](https://github.com/Barbatosishere/sky-core/releases/tag/v0.2.2)
 
 ## 使用
 
@@ -19,18 +19,19 @@ Sky Core 是 Minecraft 1.21.1 / NeoForge 21.1.265 / Java 21 的空岛整合包�
 
 ## 构建与测试
 
-使用 JDK 21。在 `run/mods` 放入以下三个依赖，或通过 `-Ppack_minecraft_dir=<游戏目录>` 指向现有实例中包含 `mods` 的目录。客户端与服务端均需安装这些依赖。
+使用 JDK 21。在 `run/mods` 放入以下依赖，或通过 `-Ppack_minecraft_dir=<游戏目录>` 指向现有实例中包含 `mods` 的目录。前三个依赖在客户端与服务端均需安装。
 
 - `ftb-teams-neoforge-2101.1.12.jar`
-- `ftb-library-neoforge-2101.1.39.jar`
+- `ftb-library-neoforge-2101.1.40.jar`
 - `architectury-13.0.12-neoforge.jar`
+- `Jade-1.21.1-NeoForge-15.10.6.jar`（构建时使用。联机时客户端与服务端均装有 Jade 才会同步收集进度。）
 
 ```powershell
 .\gradlew.bat test build --no-daemon
 .\gradlew.bat runGameTestServer --no-daemon
 ```
 
-可用 `-Pskycore_build_dir`、`-Pskycore_nfrt_dir`、`-Pskycore_gametest_dir` 和 `-Pskycore_journeytest_dir` 指定构建、NeoForm 缓存与两种游戏测试目录。完整专服冒烟使用 `python tools/run_fullpack_smoke.py --pack <游戏目录> --output <测试目录>`。`tools/check_pack_contract.py` 校验历史首章契约，其里程碑白名单仅覆盖 v1。
+可用 `-Pskycore_build_dir`、`-Pskycore_nfrt_dir`、`-Pskycore_gametest_dir` 和 `-Pskycore_journeytest_dir` 指定构建、NeoForm 缓存与两种游戏测试目录。完整专服冒烟使用 `python tools/run_fullpack_smoke.py --pack <游戏目录> --output <测试目录>`。`tools/check_pack_contract.py --instance <Prism实例根目录>` 校验首章配方、快照接口和六章任务的核心里程碑映射。
 
 测试源码、配方和结构独立放在 `src/gameTest`，不会进入发布 JAR。GameTest 读取与 pack 相同的 JSON 配方，使用真实 NeoForge 服务端、FTB Teams 登录和自然服务端 tick。`tools/generate_resources.py` 可重建原型模型、翻译、植物/伤害资源及十条契约测试配方；`tools/check_pack_contract.py --write-test-fixtures` 可将现有 pack 的五条补充配方复制到本项目测试资源，不会改动实例。熵增跨 JVM 恢复测试在同一 QA 存档依次运行 `gradlew.bat runGameTestServer --no-daemon -Pentropy_restart_phase=seed` 和 `gradlew.bat runGameTestServer --no-daemon -Pentropy_restart_phase=verify`；不要将该测试用于正式存档。
 

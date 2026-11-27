@@ -27,7 +27,15 @@ assert mapping['mapping']['first_tree'] == 'skycore:ch01/first_tree'
 assert mapping['mapping']['first_thunder'] == contract['reserved_future_milestones']['nether_gate']
 assert mapping['mapping']['cognitive_substrate'] == contract['reserved_future_milestones']['end_gate']
 known = {milestone['id'] for milestone in contract['milestones']} | set(contract['reserved_future_milestones'].values())
-assert all(value is None or value in known for value in mapping['mapping'].values())
+progress_source = ROOT / 'src/main/java/dev/skycore/progress'
+milestone_source = (progress_source / 'Milestone.java').read_text(encoding='utf-8')
+milestone_constants = dict(re.findall(r'public static final String (\w+) = "([^"]+)";', milestone_source))
+journey_source = (progress_source / 'JourneyMilestone.java').read_text(encoding='utf-8')
+journey_ids = re.findall(r'^\s*[A-Z_]+\((?:"(skycore:[^"]+)"|Milestone\.([A-Z_]+)),', journey_source, re.MULTILINE)
+assert journey_ids, 'No journey milestones found in the core source'
+known.update(literal or milestone_constants[constant] for literal, constant in journey_ids)
+unknown = {task: value for task, value in mapping['mapping'].items() if value is not None and value not in known}
+assert not unknown, f'Unknown milestone IDs in pack mapping: {unknown}'
 entropy_contract = json.loads((ROOT / 'contracts/entropy-shelter.v1.json').read_text(encoding='utf-8'))
 evidence_mapping = mapping.get('entropy_evidence_mapping', {})
 known_evidence = {entry['id'] for entry in entropy_contract['evidence']}
@@ -35,7 +43,7 @@ assert all(value is None or value in known_evidence for value in evidence_mappin
 if evidence_mapping:
     assert mapping['entropy_snapshot_method'] == entropy_contract['pack_bridge']['entropy_snapshot_method']
     assert mapping['entropy_snapshot_schema_version'] == entropy_contract['read_api']['snapshot_schema_version']
-print(f'PASS: all 7 core recipe payloads and public IDs match; {len(records) - 7} pack additions; snapshot/milestone mapping matches v1.')
+print(f'PASS: all 7 core recipe payloads and public IDs match; {len(records) - 7} pack additions; snapshot and milestone mappings match the core contracts.')
 if args.write_test_fixtures:
     fixture_root = (ROOT / 'src/gameTest/resources').resolve()
     for rid, payload in actual.items():

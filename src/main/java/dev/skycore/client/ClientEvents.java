@@ -11,7 +11,6 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 public final class ClientEvents {
     @SubscribeEvent public static void screens(RegisterMenuScreensEvent event) {
         event.register(CoreContent.WORKBENCH_MENU.get(), WorkbenchScreen::new);
-        event.register(CoreContent.WORLD_ACTIVITY_COLLECTOR_MENU.get(), WorldActivityCollectorScreen::new);
         event.register(CoreContent.WORLD_FUEL_SYNTHESIZER_MENU.get(), WorldFuelSynthesizerScreen::new);
     }
     private ClientEvents() {}

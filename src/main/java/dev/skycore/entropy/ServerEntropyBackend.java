@@ -25,12 +25,14 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.level.ExplosionEvent;
@@ -40,6 +42,7 @@ final class ServerEntropyBackend implements EntropyBackend {
     static final ResourceKey<DamageType> EXPOSURE = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath("skycore", "entropy_exposure"));
     static final ResourceKey<DamageType> BLAST = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath("skycore", "entropy_explosion"));
     static final TagKey<Block> PLANTS = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("skycore", "entropy_vulnerable_plants"));
+    static final TagKey<Block> BLASTPROOF_BLOCKS = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("skycore", "entropy_blastproof"));
     record ChunkKey(ServerLevel level, int x, int z) {}
     record Exposure(String dimension, long since) {}
     record Settings(List<? extends String> natural, int expanded, int mechanical, int perItem, int capacity,
@@ -360,6 +363,10 @@ final class ServerEntropyBackend implements EntropyBackend {
     void explode(ServerLevel level, BlockPos pos, float strength) {
         if (!blastAreaLoaded(level, pos, strength)) return;
         level.explode(null, source(level, BLAST), new ExplosionDamageCalculator() {
+            @Override public boolean shouldBlockExplode(Explosion explosion, BlockGetter world, BlockPos target, BlockState state, float power) {
+                return !state.is(BLASTPROOF_BLOCKS) && super.shouldBlockExplode(explosion, world, target, state, power);
+            }
+
             @Override public boolean shouldDamageEntity(Explosion explosion, Entity entity) {
                 return !(entity instanceof ServerPlayer player) || !grace(player);
             }

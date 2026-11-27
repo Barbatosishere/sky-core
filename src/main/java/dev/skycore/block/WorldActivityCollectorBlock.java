@@ -5,11 +5,8 @@ import dev.skycore.CoreContent;
 import dev.skycore.progress.TeamAccess;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -18,7 +15,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
 
 public final class WorldActivityCollectorBlock extends BaseEntityBlock {
     public WorldActivityCollectorBlock(Properties properties) { super(properties); }
@@ -34,17 +30,6 @@ public final class WorldActivityCollectorBlock extends BaseEntityBlock {
         if (placer instanceof ServerPlayer player && level.getBlockEntity(pos) instanceof WorldActivityCollectorBlockEntity collector) {
             TeamAccess.team(player).ifPresent(collector::bind);
         }
-    }
-
-    @Override protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (level.isClientSide) return InteractionResult.SUCCESS;
-        if (!(player instanceof ServerPlayer serverPlayer)) return InteractionResult.FAIL;
-        if (!(level.getBlockEntity(pos) instanceof WorldActivityCollectorBlockEntity collector) || !collector.mayUse(serverPlayer)) {
-            serverPlayer.displayClientMessage(Component.translatable("message.skycore.not_owner"), true);
-            return InteractionResult.FAIL;
-        }
-        serverPlayer.openMenu(collector, pos);
-        return InteractionResult.CONSUME;
     }
 
     @Override protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState replacement, boolean moved) {

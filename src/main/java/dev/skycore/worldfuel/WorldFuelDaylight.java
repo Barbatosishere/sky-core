@@ -2,11 +2,12 @@ package dev.skycore.worldfuel;
 
 import dev.skycore.logic.WorldFuelCycle;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.SectionPos;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
-import net.minecraft.core.Direction;
-import net.minecraft.tags.FluidTags;
 
 public final class WorldFuelDaylight {
     private WorldFuelDaylight() {}
@@ -26,15 +27,22 @@ public final class WorldFuelDaylight {
     public static WorldFuelCycle.Phase phase(Level level, BlockPos pos) {
         if (!isOpenSky(level, pos) || level.dimensionType().hasFixedTime()) return WorldFuelCycle.Phase.TWILIGHT;
         int skyLight = level.getBrightness(LightLayer.SKY, pos);
+        if (skyLight != 15) return WorldFuelCycle.Phase.TWILIGHT;
         int skyDarken = level.getSkyDarken();
         float sunAngle = level.getSunAngle(1.0F);
-        return WorldFuelCycle.phase(signal(skyLight, skyDarken, sunAngle, false), signal(skyLight, skyDarken, sunAngle, true));
+        var phase = WorldFuelCycle.phase(signal(skyLight, skyDarken, sunAngle, false), signal(skyLight, skyDarken, sunAngle, true));
+        float sunElevation = Mth.cos(sunAngle);
+        if (phase == WorldFuelCycle.Phase.DAY && sunElevation <= 0) return WorldFuelCycle.Phase.TWILIGHT;
+        if (phase == WorldFuelCycle.Phase.NIGHT && sunElevation >= 0) return WorldFuelCycle.Phase.TWILIGHT;
+        return phase;
     }
 
     public static boolean isOpenSky(Level level, BlockPos pos) {
         if (!level.dimensionType().hasSkyLight()) return false;
         var surface = pos.mutable();
         while (surface.getY() < level.getMaxBuildHeight() && level.getFluidState(surface).is(FluidTags.WATER)) surface.move(Direction.UP);
-        return level.canSeeSky(surface);
+        int lowestSkySourceY = level.getChunkAt(surface).getSkyLightSources()
+                .getLowestSourceY(SectionPos.sectionRelative(surface.getX()), SectionPos.sectionRelative(surface.getZ()));
+        return surface.getY() >= lowestSkySourceY && level.canSeeSky(surface);
     }
 }

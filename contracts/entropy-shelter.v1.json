@@ -227,7 +227,7 @@
   "evidence": [
     {
       "id": "skycore:entropy/world_fuel_produced",
-      "trigger": "owned workbench committed skycore:entropy/world_fuel with both world_fuel and anti_entropy_stone positive outputs"
+      "trigger": "owned workbench committed skycore:entropy/world_fuel with both world_fuel and anti_entropy_stone positive outputs, or a team-owned crude world fuel item entity completed open-sky refinement and spawned its results"
     },
     {
       "id": "skycore:entropy/world_fuel_supplied",

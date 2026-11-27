@@ -19,7 +19,6 @@ import net.minecraft.core.UUIDUtil;
 import java.util.UUID;
 import net.minecraft.network.codec.ByteBufCodecs;
 import dev.skycore.menu.WorkbenchMenu;
-import dev.skycore.menu.WorldActivityCollectorMenu;
 import dev.skycore.menu.WorldFuelSynthesizerMenu;
 import dev.skycore.recipe.GerminationRecipe;
 import dev.skycore.recipe.StoneProcessingRecipe;
@@ -82,7 +81,6 @@ public final class CoreContent {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<WorldActivityCollectorBlockEntity>> WORLD_ACTIVITY_COLLECTOR_ENTITY = ENTITIES.register("world_activity_collector", () -> BlockEntityType.Builder.of(WorldActivityCollectorBlockEntity::new, WORLD_ACTIVITY_COLLECTOR.get()).build(null));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<WorldFuelSynthesizerBlockEntity>> WORLD_FUEL_SYNTHESIZER_ENTITY = ENTITIES.register("world_fuel_synthesizer", () -> BlockEntityType.Builder.of(WorldFuelSynthesizerBlockEntity::new, WORLD_FUEL_SYNTHESIZER.get()).build(null));
     public static final DeferredHolder<MenuType<?>, MenuType<WorkbenchMenu>> WORKBENCH_MENU = MENUS.register("stone_workbench", () -> IMenuTypeExtension.create(WorkbenchMenu::new));
-    public static final DeferredHolder<MenuType<?>, MenuType<WorldActivityCollectorMenu>> WORLD_ACTIVITY_COLLECTOR_MENU = MENUS.register("world_activity_collector", () -> IMenuTypeExtension.create(WorldActivityCollectorMenu::new));
     public static final DeferredHolder<MenuType<?>, MenuType<WorldFuelSynthesizerMenu>> WORLD_FUEL_SYNTHESIZER_MENU = MENUS.register("world_fuel_synthesizer", () -> IMenuTypeExtension.create(WorldFuelSynthesizerMenu::new));
     public static final DeferredHolder<RecipeType<?>, RecipeType<StoneProcessingRecipe>> STONE_PROCESSING = TYPES.register("stone_processing", () -> new RecipeType<>() { @Override public String toString() { return "skycore:stone_processing"; } });
     public static final DeferredHolder<RecipeType<?>, RecipeType<GerminationRecipe>> GERMINATION = TYPES.register("germination", () -> new RecipeType<>() { @Override public String toString() { return "skycore:germination"; } });

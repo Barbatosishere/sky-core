@@ -260,6 +260,41 @@ public final class EntropyTests {
         }).thenSucceed();
     }
 
+    @GameTest(template = "empty", batch = "entropy_blast", timeoutTicks = 120)
+    public static void entropyBlastproofTagProtectsAllStonecuttingBlocks(GameTestHelper helper) {
+        var backend = backend(helper); var level = helper.getLevel();
+        BlockPos blast = new BlockPos(263000, 100, 263000);
+        for (int chunkX = (blast.getX() - 16) >> 4; chunkX <= (blast.getX() + 16) >> 4; chunkX++) {
+            for (int chunkZ = (blast.getZ() - 16) >> 4; chunkZ <= (blast.getZ() + 16) >> 4; chunkZ++) {
+                level.getChunk(chunkX, chunkZ);
+            }
+        }
+        List<Block> blastproof = List.of(
+                EntropyContent.ANTI_ENTROPY_STONE.get(),
+                Blocks.WHITE_CONCRETE, Blocks.ORANGE_CONCRETE, Blocks.MAGENTA_CONCRETE, Blocks.LIGHT_BLUE_CONCRETE,
+                Blocks.YELLOW_CONCRETE, Blocks.LIME_CONCRETE, Blocks.PINK_CONCRETE, Blocks.GRAY_CONCRETE,
+                Blocks.LIGHT_GRAY_CONCRETE, Blocks.CYAN_CONCRETE, Blocks.PURPLE_CONCRETE, Blocks.BLUE_CONCRETE,
+                Blocks.BROWN_CONCRETE, Blocks.GREEN_CONCRETE, Blocks.RED_CONCRETE, Blocks.BLACK_CONCRETE,
+                Blocks.STONE_BRICKS, Blocks.SMOOTH_STONE, Blocks.OCHRE_FROGLIGHT,
+                Blocks.VERDANT_FROGLIGHT, Blocks.PEARLESCENT_FROGLIGHT);
+        BlockPos target = blast.east();
+        BlockPos ordinary = blast.west();
+        helper.assertFalse(backend.protectedAt(level, target), "The blastproof fixture has no shelter");
+        helper.assertTrue(backend.blastAreaLoaded(level, blast, 4), "The blast fixture has a loaded halo");
+        for (Block block : blastproof) {
+            level.setBlock(blast, Blocks.AIR.defaultBlockState(), 2 | 16);
+            level.setBlock(target, block.defaultBlockState(), 2 | 16);
+            level.setBlock(ordinary, Blocks.GLASS.defaultBlockState(), 2 | 16);
+            backend.explode(level, blast, 4);
+            helper.assertTrue(level.getBlockState(target).is(block), "Entropy blast preserves " + block.getName().getString());
+            helper.assertTrue(level.getBlockState(ordinary).isAir(), "Entropy blast still breaks ordinary blocks");
+        }
+        level.setBlock(target, Blocks.STONE_BRICKS.defaultBlockState(), 2 | 16);
+        level.explode(null, blast.getX() + 0.5, blast.getY() + 0.5, blast.getZ() + 0.5, 8, Level.ExplosionInteraction.BLOCK);
+        helper.assertTrue(level.getBlockState(target).isAir(), "Normal explosions can still destroy cut blocks");
+        helper.succeed();
+    }
+
     @GameTest(template = "empty", batch = "entropy_persistence", timeoutTicks = 100)
     public static void ledgerRoundTripRejectsUnknownSchemasAndReadsWithoutCreatingRecords(GameTestHelper helper) {
         ServerPlayer player = player(helper); var backend = backend(helper); var level = helper.getLevel();

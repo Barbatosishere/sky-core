@@ -16,6 +16,7 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
 
 public final class WorldFuelEvents {
@@ -27,7 +28,14 @@ public final class WorldFuelEvents {
         bus.addListener(WorldFuelEvents::capabilities);
         NeoForge.EVENT_BUS.addListener(WorldFuelEvents::placed);
         NeoForge.EVENT_BUS.addListener(WorldFuelEvents::spawned);
+        NeoForge.EVENT_BUS.addListener(WorldFuelEvents::tickDroppedMaterial);
         WorldFuelSafety.register();
+    }
+
+    private static void tickDroppedMaterial(EntityTickEvent.Post event) {
+        if (event.getEntity() instanceof ItemEntity item && item.getItem().getItem() instanceof WorldFuelMaterialItem) {
+            WorldFuelTransformations.tick(item);
+        }
     }
 
     private static void capabilities(RegisterCapabilitiesEvent event) {

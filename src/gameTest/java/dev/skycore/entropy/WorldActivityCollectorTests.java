@@ -4,7 +4,6 @@ import dev.skycore.CoreContent;
 import dev.skycore.api.entropy.EntropyContract;
 import dev.skycore.block.WorldActivityCollectorBlockEntity;
 import dev.skycore.logic.WorldFuelCycle;
-import dev.skycore.menu.WorldActivityCollectorMenu;
 import dev.skycore.worldfuel.WorldFuelEvents;
 import dev.skycore.worldfuel.WorldFuelDaylight;
 import java.util.ArrayList;
@@ -27,6 +26,7 @@ import net.minecraft.world.level.block.DaylightDetectorBlock;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.HopperBlock;
 import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.entity.DispenserBlockEntity;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.phys.AABB;
@@ -35,16 +35,16 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
-import static dev.skycore.menu.WorldActivityCollectorMenu.*;
+import static dev.skycore.block.WorldActivityCollectorBlockEntity.ACTIVITY_OUT;
+import static dev.skycore.block.WorldActivityCollectorBlockEntity.POWDER_IN;
 
 @GameTestHolder("skycore")
 @PrefixGameTestTemplate(false)
 public final class WorldActivityCollectorTests {
     @GameTest(template = "empty", batch = "world_fuel_automation", timeoutTicks = 80)
-    public static void collectorExportsThroughActualHopperAndPreservesLegacyInputs(GameTestHelper helper) {
+    public static void collectorOutputsIntoActualHopperAndPreservesLegacyInputs(GameTestHelper helper) {
         var level = helper.getLevel();
         var player = EntropyTests.player(helper);
-        var outsider = EntropyTests.player(helper);
         BlockPos relative = new BlockPos(3, 3, 3);
         helper.setBlock(relative.below(), Blocks.HOPPER.defaultBlockState().setValue(HopperBlock.FACING, Direction.DOWN));
         helper.setBlock(relative, CoreContent.WORLD_ACTIVITY_COLLECTOR.get());
@@ -55,9 +55,8 @@ public final class WorldActivityCollectorTests {
         saved.putInt("CollectionTicks", WorldFuelCycle.COLLECTION_TICKS - 1);
         saved.putInt("ActivationTicks", 1_900);
         collector.loadWithComponents(saved, level.registryAccess());
-        var menu = (WorldActivityCollectorMenu) collector.createMenu(1, player.getInventory(), player);
-        helper.assertTrue(menu != null && collector.createMenu(2, outsider.getInventory(), outsider) == null, "Manual use requires the owning team");
-        helper.assertFalse(menu.getSlot(POWDER_IN).mayPlace(new ItemStack(CoreContent.TRANSMUTATION_POWDER.get())), "Collector no longer accepts processing inputs");
+        helper.useBlock(relative, player);
+        helper.assertTrue(player.containerMenu == player.inventoryMenu, "Using the collector does not open a menu");
         var capability = level.getCapability(Capabilities.ItemHandler.BLOCK, collector.getBlockPos(), Direction.DOWN);
         helper.assertTrue(capability != null, "Provides sided automation inventory");
         int simulated = 0;
@@ -71,9 +70,48 @@ public final class WorldActivityCollectorTests {
         helper.assertValueEqual(collector.getItem(POWDER_IN).getOrDefault(CoreContent.WORLD_FUEL_PROGRESS.get(), 0), 1_900, "Preserves pending old progress on its item");
         helper.runAfterDelay(45, () -> {
             var hopper = (HopperBlockEntity) level.getBlockEntity(helper.absolutePos(relative.below()));
-            helper.assertValueEqual(hopper.countItem(CoreContent.WORLD_ACTIVITY.get()), 1, "Real hopper extracts newly collected activity");
+            helper.assertValueEqual(hopper.countItem(CoreContent.WORLD_ACTIVITY.get()), 1, "Real hopper receives newly collected activity");
             helper.assertValueEqual(hopper.countItem(CoreContent.TRANSMUTATION_POWDER.get()), 3, "Real hopper recovers all old inputs");
             helper.assertTrue(collector.isEmpty(), "No duplicated or stranded items remain");
+            helper.succeed();
+        });
+    }
+
+    @GameTest(template = "empty", batch = "world_fuel_automation", timeoutTicks = 40)
+    public static void collectorPushesDownAndRetriesPartialOutput(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var player = EntropyTests.player(helper);
+        BlockPos relative = new BlockPos(3, 3, 3);
+        BlockPos below = relative.below();
+        BlockPos beside = relative.east();
+        helper.setBlock(below, Blocks.CHEST);
+        helper.setBlock(beside, Blocks.CHEST);
+        helper.setBlock(relative, CoreContent.WORLD_ACTIVITY_COLLECTOR.get());
+        var chest = (ChestBlockEntity) level.getBlockEntity(helper.absolutePos(below));
+        var sideChest = (ChestBlockEntity) level.getBlockEntity(helper.absolutePos(beside));
+        var collector = (WorldActivityCollectorBlockEntity) level.getBlockEntity(helper.absolutePos(relative));
+        var activity = CoreContent.WORLD_ACTIVITY.get();
+        collector.bind(EntropyTests.team(player));
+        collector.setItem(ACTIVITY_OUT, new ItemStack(activity, 64));
+        for (int slot = 0; slot < chest.getContainerSize(); slot++) chest.setItem(slot, new ItemStack(Items.STONE, 64));
+        var saved = collector.saveWithoutMetadata(level.registryAccess());
+        saved.putInt("CollectionTicks", WorldFuelCycle.COLLECTION_TICKS - 1);
+        collector.loadWithComponents(saved, level.registryAccess());
+
+        helper.runAfterDelay(4, () -> {
+            helper.assertValueEqual(collector.collectionTicks(), WorldFuelCycle.COLLECTION_TICKS, "Full output buffer holds completed progress");
+            helper.assertValueEqual(collector.getItem(ACTIVITY_OUT).getCount(), 64, "Rejected output stays in the buffer");
+            chest.setItem(0, new ItemStack(activity, 63));
+        });
+        helper.runAfterDelay(8, () -> {
+            helper.assertValueEqual(chest.countItem(activity), 64, "Partial insertion fills the one available space below");
+            helper.assertValueEqual(collector.getItem(ACTIVITY_OUT).getCount(), 64, "The remaining buffer includes exactly one new activity");
+            helper.assertTrue(collector.collectionTicks() < WorldFuelCycle.COLLECTION_TICKS, "Collection resumes when the buffer has space");
+            chest.setItem(1, ItemStack.EMPTY);
+        });
+        helper.runAfterDelay(12, () -> {
+            helper.assertValueEqual(chest.countItem(activity), 128, "The chest directly below receives the rest without a hopper");
+            helper.assertTrue(collector.isEmpty() && sideChest.isEmpty(), "Nothing is duplicated or pushed sideways");
             helper.succeed();
         });
     }
@@ -102,16 +140,28 @@ public final class WorldActivityCollectorTests {
         var powderStack = new ItemStack(CoreContent.TRANSMUTATION_POWDER.get(), 2);
         powderStack.set(CoreContent.WORLD_FUEL_PROGRESS.get(), WorldFuelCycle.ACTIVATION_TICKS - 1);
         ItemEntity powder = item(helper, powderStack, new BlockPos(2, 3, 2));
+        seedWork(powder, WorldFuelCycle.ACTIVATION_TICKS, WorldFuelCycle.ACTIVATION_TICKS - 1);
         var crude = new ItemStack(CoreContent.CRUDE_WORLD_FUEL.get(), 3);
-        crude.set(CoreContent.WORLD_FUEL_PROGRESS.get(), WorldFuelCycle.REFINEMENT_TICKS - 1);
         crude.set(CoreContent.WORLD_FUEL_OWNER.get(), EntropyTests.team(player));
-        item(helper, crude, new BlockPos(4, 3, 4));
+        var refining = item(helper, crude, new BlockPos(4, 3, 4));
+        refining.age = 5_500;
+        seedWork(refining, WorldFuelCycle.REFINEMENT_TICKS, WorldFuelCycle.REFINEMENT_TICKS - 1);
+        var expiring = item(helper, new ItemStack(CoreContent.CRUDE_WORLD_FUEL.get()), new BlockPos(4, 3, 1));
+        expiring.age = 5_999;
+        seedWork(expiring, WorldFuelCycle.REFINEMENT_TICKS, WorldFuelCycle.REFINEMENT_TICKS - 1);
         helper.runAfterDelay(25, () -> {
             helper.assertTrue(level.getBlockState(normal).getValue(DaylightDetectorBlock.POWER) > 0, "Ordinary sensor produces power at noon");
             helper.assertValueEqual(level.getBlockState(inverted).getValue(DaylightDetectorBlock.POWER), 0, "Inverted sensor is zero at noon");
             helper.assertValueEqual(WorldFuelDaylight.phase(level, inverted), WorldFuelCycle.Phase.DAY, "Zero inverted detector output means day");
-            helper.assertValueEqual(powder.getItem().getOrDefault(CoreContent.WORLD_FUEL_PROGRESS.get(), 0), 3_799, "Powder pauses during the day");
+            helper.assertFalse(powder.getItem().has(CoreContent.WORLD_FUEL_PROGRESS.get()), "Legacy progress is removed from dropped stacks");
+            helper.assertValueEqual(workTicks(powder), 0, "Daylight clears activation progress");
+            helper.assertTrue(powder.getAge() > 0, "Invalid conditions still advance ordinary item age");
+            helper.assertFalse(expiring.isAlive(), "Expiry wins if the last work tick would fall on the expiry tick");
             helper.assertValueEqual(worldCount(helper, EntropyContent.WORLD_FUEL.get()), 3, "Refines the entire dropped stack exactly once");
+            var fuel = level.getEntitiesOfClass(ItemEntity.class, bounds(helper), entity -> entity.getItem().is(EntropyContent.WORLD_FUEL.get())).getFirst();
+            helper.assertTrue(fuel.getAge() < 30, "The result starts with fresh item age");
+            helper.assertValueEqual(fuel.lifespan, 6_000, "The result receives an ordinary lifespan");
+            fuel.age = 5_999;
             helper.assertTrue(EntropyRuntime.hasEvidence(player, EntropyContract.WORLD_FUEL_PRODUCED), "Real owner receives production evidence");
             helper.assertFalse(EntropyRuntime.hasEvidence(outsider, EntropyContract.WORLD_FUEL_PRODUCED), "Other team receives no production evidence");
             level.setDayTime(18_000);
@@ -120,17 +170,21 @@ public final class WorldActivityCollectorTests {
             helper.assertValueEqual(level.getBlockState(normal).getValue(DaylightDetectorBlock.POWER), 0, "Ordinary sensor is zero at night");
             helper.assertTrue(level.getBlockState(inverted).getValue(DaylightDetectorBlock.POWER) > 0, "Inverted sensor is active at night");
             helper.assertValueEqual(WorldFuelDaylight.phase(level, normal), WorldFuelCycle.Phase.NIGHT, "Zero ordinary detector output means night");
-            helper.assertValueEqual(worldCount(helper, CoreContent.ACTIVE_TRANSMUTATION_AGENT.get()), 2, "Night converts both powders");
-            ItemStack paused = new ItemStack(CoreContent.CRUDE_WORLD_FUEL.get());
-            paused.set(CoreContent.WORLD_FUEL_PROGRESS.get(), 777);
-            ItemEntity pending = item(helper, paused, new BlockPos(4, 3, 1));
+            helper.assertValueEqual(worldCount(helper, EntropyContent.WORLD_FUEL.get()), 0, "Converted fuel also expires naturally");
+            helper.assertValueEqual(worldCount(helper, CoreContent.ACTIVE_TRANSMUTATION_AGENT.get()), 0, "Returning to valid time does not resume old progress");
+            helper.assertTrue(workTicks(powder) > 0 && workTicks(powder) < 35, "Night starts a new activation timer");
+            seedWork(powder, WorldFuelCycle.ACTIVATION_TICKS, WorldFuelCycle.ACTIVATION_TICKS - 1);
+            ItemEntity pending = item(helper, new ItemStack(CoreContent.CRUDE_WORLD_FUEL.get()), new BlockPos(4, 3, 1));
+            seedWork(pending, WorldFuelCycle.REFINEMENT_TICKS, 777);
             var tag = new CompoundTag();
             pending.saveWithoutId(tag);
             var restored = new ItemEntity(level, 0, 0, 0, ItemStack.EMPTY);
             restored.load(tag);
-            helper.assertValueEqual(restored.getItem().getOrDefault(CoreContent.WORLD_FUEL_PROGRESS.get(), 0), 777, "Dropped-item serialization preserves incomplete progress");
+            helper.assertValueEqual(workTicks(restored), 777, "Entity serialization retains its separate timer");
+            helper.assertValueEqual(workTicks(item(helper, pending.getItem().copy(), new BlockPos(5, 3, 1))), 0, "Re-dropping the stack starts without progress");
             helper.runAfterDelay(5, () -> {
-                helper.assertValueEqual(pending.getItem().getOrDefault(CoreContent.WORLD_FUEL_PROGRESS.get(), 0), 777, "Night leaves crude fuel progress paused");
+                helper.assertValueEqual(workTicks(pending), 0, "Night clears refinement progress");
+                helper.assertValueEqual(worldCount(helper, CoreContent.ACTIVE_TRANSMUTATION_AGENT.get()), 2, "Night converts both powders at full progress");
                 pending.discard();
                 level.setDayTime(6_000);
                 level.setWeatherParameters(0, 100_000, true, true);
@@ -141,7 +195,12 @@ public final class WorldActivityCollectorTests {
             int invertedPower = level.getBlockState(inverted).getValue(DaylightDetectorBlock.POWER);
             helper.assertValueEqual(WorldFuelDaylight.phase(level, normal), WorldFuelCycle.phase(normalPower, invertedPower), "Weather matches the two actual sensor outputs");
             helper.assertTrue(invertedPower > 0, "Rain prevents the inverted detector from reaching zero");
-            helper.succeed();
+            var darkened = item(helper, new ItemStack(CoreContent.CRUDE_WORLD_FUEL.get()), new BlockPos(4, 3, 1));
+            seedWork(darkened, WorldFuelCycle.REFINEMENT_TICKS, WorldFuelCycle.REFINEMENT_TICKS - 1);
+            helper.runAfterDelay(3, () -> {
+                helper.assertValueEqual(workTicks(darkened), 0, "Insufficient daylight clears progress even at noon");
+                helper.succeed();
+            });
         });
     }
 
@@ -174,12 +233,24 @@ public final class WorldActivityCollectorTests {
             helper.assertValueEqual(dropper.countItem(CoreContent.TRANSMUTATION_POWDER.get()), 1, "Real redstone-powered dropper ejects one input");
             var source = level.getEntitiesOfClass(ItemEntity.class, bounds(helper), entity -> entity.getItem().is(CoreContent.TRANSMUTATION_POWDER.get())).getFirst();
             helper.assertValueEqual(source.getItem().get(CoreContent.WORLD_FUEL_OWNER.get()), EntropyTests.team(player), "Native dropped item records the dropper team");
-            helper.assertTrue(source.lifespan > 6_000, "Paused material survives ordinary dropped-item expiry");
+            helper.assertValueEqual(source.lifespan, 6_000, "Dropped materials keep ordinary expiry");
             ItemStack foreign = source.getItem().copy();
             foreign.set(CoreContent.WORLD_FUEL_OWNER.get(), java.util.UUID.randomUUID());
             helper.assertFalse(ItemEntity.areMergable(source.getItem(), foreign), "Different teams cannot merge away provenance");
             helper.succeed();
         });
+    }
+
+    static void seedWork(ItemEntity entity, int duration, int ticks) {
+        var work = new CompoundTag();
+        work.putInt("Count", entity.getItem().getCount());
+        work.putInt("Duration", duration);
+        work.putInt("Ticks", ticks);
+        entity.getPersistentData().put("SkyCoreWorldFuelWork", work);
+    }
+
+    static int workTicks(ItemEntity entity) {
+        return entity.getPersistentData().getCompound("SkyCoreWorldFuelWork").getInt("Ticks");
     }
 
     private static ItemEntity item(GameTestHelper helper, ItemStack stack, BlockPos relative) {

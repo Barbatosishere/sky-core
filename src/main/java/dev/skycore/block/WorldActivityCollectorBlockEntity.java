@@ -2,44 +2,39 @@ package dev.skycore.block;
 
 import dev.skycore.CoreContent;
 import dev.skycore.logic.WorldFuelCycle;
-import dev.skycore.menu.WorldActivityCollectorMenu;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.Containers;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
 
-import static dev.skycore.menu.WorldActivityCollectorMenu.*;
-
-public final class WorldActivityCollectorBlockEntity extends OwnedInventoryBlockEntity implements MenuProvider, WorldlyContainer {
-    private int collectionTicks;
+public final class WorldActivityCollectorBlockEntity extends OwnedInventoryBlockEntity implements WorldlyContainer {
+    public static final int POWDER_IN = 0;
+    private static final int AGENT_IN = 1;
+    private static final int ACTIVITY_IN = 2;
+    private static final int CRUDE_IN = 3;
+    public static final int ACTIVITY_OUT = 4;
+    private static final int AGENT_OUT = 5;
+    private static final int CRUDE_OUT = 6;
+    private static final int STONE_OUT = 7;
+    private static final int RESIDUE_OUT = 8;
+    private static final int FUEL_OUT = 9;
+    private static final int MACHINE_SLOTS = 10;
     private static final int[] EXPORT_SLOTS = {ACTIVITY_OUT, POWDER_IN, AGENT_IN, ACTIVITY_IN, CRUDE_IN, AGENT_OUT, CRUDE_OUT, STONE_OUT, RESIDUE_OUT, FUEL_OUT};
-
-    private final ContainerData progress = new ContainerData() {
-        @Override public int get(int index) { return index == 0 ? collectionTicks : 0; }
-        @Override public void set(int index, int value) {}
-        @Override public int getCount() { return 3; }
-    };
+    private int collectionTicks;
 
     public WorldActivityCollectorBlockEntity(BlockPos pos, BlockState state) {
         super(CoreContent.WORLD_ACTIVITY_COLLECTOR_ENTITY.get(), pos, state, MACHINE_SLOTS);
     }
 
-    @Override public Component getDisplayName() { return Component.translatable("block.skycore.world_activity_collector"); }
-
-    @Nullable @Override public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
-        return stillValid(player) ? new WorldActivityCollectorMenu(id, playerInventory, this, progress) : null;
-    }
+    public int collectionTicks() { return collectionTicks; }
 
     @Override public int[] getSlotsForFace(Direction side) { return owner == null ? new int[0] : EXPORT_SLOTS.clone(); }
     @Override public boolean canPlaceItem(int slot, ItemStack stack) { return false; }
@@ -58,6 +53,15 @@ public final class WorldActivityCollectorBlockEntity extends OwnedInventoryBlock
             collectionTicks = 0;
         }
         if (collectionTicks != previous) setChanged();
+
+        output = getItem(ACTIVITY_OUT);
+        if (!output.isEmpty()) {
+            IItemHandler target = level.getCapability(Capabilities.ItemHandler.BLOCK, worldPosition.below(), Direction.UP);
+            if (target != null) {
+                ItemStack remainder = ItemHandlerHelper.insertItemStacked(target, output.copy(), false);
+                if (remainder.getCount() != output.getCount()) setItem(ACTIVITY_OUT, remainder);
+            }
+        }
     }
 
     void dropInventory() {

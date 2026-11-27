@@ -67,10 +67,11 @@ if (gradle.startParameter.taskNames.any { it.toLowerCase(java.util.Locale.ROOT).
 def packMods = file("${pack_minecraft_dir}/mods")
 dependencies {
     implementation files(new File(packMods, 'ftb-teams-neoforge-2101.1.12.jar'))
-    runtimeOnly files(new File(packMods, 'ftb-library-neoforge-2101.1.39.jar'))
+    runtimeOnly files(new File(packMods, 'ftb-library-neoforge-2101.1.40.jar'))
     runtimeOnly files(new File(packMods, 'architectury-13.0.12-neoforge.jar'))
     compileOnly files(new File(packMods, 'architectury-13.0.12-neoforge.jar'))
-    gameTestImplementation files(new File(packMods, 'ftb-library-neoforge-2101.1.39.jar'))
+    compileOnly files(new File(packMods, 'Jade-1.21.1-NeoForge-15.10.6.jar'))
+    gameTestImplementation files(new File(packMods, 'ftb-library-neoforge-2101.1.40.jar'))
     gameTestImplementation files(new File(packMods, 'architectury-13.0.12-neoforge.jar'))
     testImplementation platform('org.junit:junit-bom:5.11.4')
     testImplementation 'org.junit.jupiter:junit-jupiter'
